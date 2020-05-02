@@ -1,0 +1,11 @@
+.task {
+    font-size: 1.25rem;
+}
+
+.completed {
+    color: green;
+}
+
+.list-padd {
+    padding-top: 15px;
+}
