@@ -1,4 +1,5 @@
 <?php
+require_once ('controllers/reseniasController.php');
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
 
@@ -11,13 +12,14 @@ $urlParts = explode('/', $_GET['action']);
 
 // Llama a la funcion correspondiente para cada caso
 switch ($urlParts[0]) {
-    case 'resenas':
-        echo "Aca listado de items";
+    case 'resenias':
+        $controller = new reseniasController();
+        $controller->listaResenias();
         break;
     case 'detalle':
         echo "Aca se muestra un detalle de el item $urlParts[1]";
         break;
-    case 'genero':
+    case 'generos':
         echo "Aca listado de categorias";
         break;
     case 'resenasgenero':

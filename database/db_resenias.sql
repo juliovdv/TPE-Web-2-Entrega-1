@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-05-2020 a las 16:09:28
+-- Tiempo de generación: 07-05-2020 a las 00:05:57
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.10
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `db_resenas`
+-- Base de datos: `db_resenias`
 --
 
 -- --------------------------------------------------------
