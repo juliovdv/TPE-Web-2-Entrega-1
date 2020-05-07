@@ -1,7 +1,10 @@
 <?php
 class reseniasView {
-    function mostrarResenias ($resenias){
-        print_r ($resenias);
+    function mostrarTabla ($tabla){
+        print_r ($tabla);
+    }
+    function mostrarDetalle ($reseña){
+        print_r ($reseña);
     }
 }
 ?>

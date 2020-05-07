@@ -7,9 +7,13 @@ class reseniasController {
         $this->model = new reseniasModel();
         $this->view = new reseniasView();
     }
-    public function listaResenias() {
-        $resenias = $this->model->buscarResenias();
-        $this->view->mostrarResenias($resenias);
+    public function listaTabla($tabla) {
+        $detalletabla = $this->model->traerTabla($tabla);
+        $this->view->mostrarTabla($detalletabla);
+    }
+    public function detalleResenia($id){
+        $resenia = $this->model->traerResenia($id);
+        $this->view->mostrarDetalle($resenia);
     }
 }
 ?>

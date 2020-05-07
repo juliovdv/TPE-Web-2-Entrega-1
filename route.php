@@ -14,14 +14,15 @@ $urlParts = explode('/', $_GET['action']);
 switch ($urlParts[0]) {
     case 'resenias':
         $controller = new reseniasController();
-        $controller->listaResenias();
+        $controller->listaTabla('pelicula');
         break;
     case 'detalle':
-        echo "Aca se muestra un detalle de el item $urlParts[1]";
+        $controller = new reseniasController();
+        $controller->detalleResenia($urlParts[1]);
         break;
     case 'generos':
-        echo "Aca listado de categorias";
-        break;
+        $controller = new reseniasController();
+        $controller->listaTabla('genero');
     case 'resenasgenero':
         echo "Aca listado de items por categorias";
         break;
