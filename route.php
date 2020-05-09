@@ -5,7 +5,7 @@ define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] 
 
 // Si la direccion viene vacia lo direcciona a reseñas
 if ($_GET['action'] == '')
-    $_GET['action'] = 'resenas';
+    $_GET['action'] = 'resenias';
 
 // Divide la direccion en partes, el separador es /
 $urlParts = explode('/', $_GET['action']);
@@ -14,7 +14,7 @@ $urlParts = explode('/', $_GET['action']);
 switch ($urlParts[0]) {
     case 'resenias':
         $controller = new reseniasController();
-        $controller->listaTabla('pelicula');
+        $controller->tablaResenias();
         break;
     case 'detalle':
         $controller = new reseniasController();
@@ -22,9 +22,19 @@ switch ($urlParts[0]) {
         break;
     case 'generos':
         $controller = new reseniasController();
-        $controller->listaTabla('genero');
+        $controller->tablaGeneros();
+        break;
     case 'resenasgenero':
-        echo "Aca listado de items por categorias";
+        $controller = new reseniasController();
+        //$controller->listaReseniasporGenero($urlParts[1]); OJO! Falta
+        break;
+    case 'agregarresenia':
+        $controller = new reseniasController();
+        $controller->agregarResenia();
+        break;
+    case 'agregargenero':
+        $controller = new reseniasController();
+        //$controller->agregarGenero(); OJO! Falta
         break;
     default:
         echo "<h1>Error 404 - Pagina no encontrada</h1>";
