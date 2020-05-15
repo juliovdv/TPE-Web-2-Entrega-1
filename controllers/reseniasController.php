@@ -14,7 +14,7 @@ class reseniasController {
     //Muestra toda la tabla resenias
     public function tablaResenias() {
         $detalletabla = $this->modelResenias->traerResenias();
-        $this->view->mostrarTabla($detalletabla);
+        $this->view->mostrarResenias($detalletabla);
     }
     //Muestra en detalle una resenia
     public function detalleResenia($id){
@@ -23,10 +23,10 @@ class reseniasController {
     }
     //Agrega una resenia
     public function agregarResenia() {
-        $nombrepelicula = 'La gran fuga'; //$_POST['nombre']; OJO! Falta
+        $nombrepelicula = $_POST['nombre_pelicula'];
         $usuario = 'Julio';
-        $resenia = 'Hermosa'; //$_POST['resenia']; OJO! Falta
-        $genero = '1';//$_POST['genero']; OJO! Falta
+        $resenia = $_POST['resenia']; 
+        $genero = $_POST['genero'];
 
         $success = $this->modelResenias->guardarResenia($nombrepelicula, $usuario, $resenia, $genero);
 
@@ -35,10 +35,14 @@ class reseniasController {
         else
             print_r('Error');//$this->view->showError("Faltan datos obligatorios"); OJO! Falta
     }
+    public function eliminarResenia($id) {
+        $this->modelResenias->eliminarReseniaDB($id);
+        header('Location: ' . BASE_URL . "resenias");    }
+
 //Tabla generos
     //Muestra toda la tabla generos
     public function tablaGeneros() {
         $detalletabla = $this->modelGeneros->traerGeneros();
-        $this->view->mostrarTabla($detalletabla);
+        $this->view->mostrarGeneros($detalletabla);
     }
 }

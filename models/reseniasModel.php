@@ -14,9 +14,9 @@ class reseniasModel
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
     }
-    public function  traerResenia($id)
+    public function traerResenia($id)
     {
-        $sentencia = $this->db->prepare("SELECT * FROM resenia WHERE id_pelicula = ?");
+        $sentencia = $this->db->prepare("SELECT * FROM resenia WHERE id_resenia = ?");
         $sentencia->execute(array(($id)));   
         $detalle = $sentencia->fetch(PDO::FETCH_OBJ);
         return $detalle;
@@ -24,5 +24,9 @@ class reseniasModel
     public function guardarResenia($nombrepelicula, $usuario, $resenia, $genero){
         $sentencia = $this->db->prepare('INSERT INTO resenia (nombre_pelicula, usuario, resenia, id_genero) VALUES (?, ?, ?, ?)');
         return $sentencia->execute([$nombrepelicula ,$usuario , $resenia, $genero]);
+    }
+    public function eliminarReseniaDB($id){
+        $sentencia = $this->db->prepare('DELETE FROM resenia WHERE id_resenia = ?');
+        $sentencia->execute([$id]);
     }
 }
