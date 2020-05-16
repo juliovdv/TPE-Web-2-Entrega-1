@@ -1,5 +1,7 @@
 <?php
 require_once ('controllers/reseniasController.php');
+require_once ('controllers/usuariosController.php');
+
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
 
@@ -24,21 +26,33 @@ switch ($urlParts[0]) {
         $controller = new reseniasController();
         $controller->tablaGeneros();
         break;
-    case 'resenasgenero':
+    case 'reseniasgenero':
         $controller = new reseniasController();
-        //$controller->listaReseniasporGenero($urlParts[1]); OJO! Falta
+        $controller->tablaReseniasporGeneros();
+        break;
+    case 'login':
+        $controller = new usuariosController();
+        $controller->mostrarLogin();
+        break;
+    case 'admin':
+        $controller = new reseniasController();
+        $controller->admin();
         break;
     case 'agregarresenia':
         $controller = new reseniasController();
         $controller->agregarResenia();
         break;
-    case 'agregargenero':
-        $controller = new reseniasController();
-        //$controller->agregarGenero(); OJO! Falta
-        break;
     case 'eliminarresenia':
         $controller = new reseniasController();
         $controller->eliminarResenia($urlParts[1]);
+        break;
+    case 'agregargenero':
+        $controller = new reseniasController();
+        $controller->agregarGenero();
+        break;
+    case 'eliminargenero':
+        $controller = new reseniasController();
+        //$controller->eliminarGenero($urlParts[1]); OJO! Falta
         break;
     default:
         echo "<h1>Error 404 - Pagina no encontrada</h1>";

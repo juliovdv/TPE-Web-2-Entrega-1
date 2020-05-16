@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 2px;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+    background-color: steelblue;
+}
+.cuerpo {
+    background-color: lightgray;
+}
+
+.sidenav{
+    background-color: steelblue;
+}
+
+.btn-formulario{
+    background-color:silver;
+}
+
+.titulo-formulario{
+    background-color:steelblue;
+}
+
+form {
+    border: 3px whitesmoke dashed;
+}

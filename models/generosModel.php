@@ -13,6 +13,10 @@ class generosModel
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
     }
+    public function guardarGenero($genero){
+        $sentencia = $this->db->prepare('INSERT INTO genero (nombre) VALUES (?)');
+        return $sentencia->execute([$genero]);
+    }
 }
 
 ?>

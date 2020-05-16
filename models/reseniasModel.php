@@ -14,6 +14,13 @@ class reseniasModel
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
     }
+    public function traerReseniasporGeneros()
+    {
+        $sentencia = $this->db->prepare("SELECT * FROM resenia JOIN genero ON resenia.id_genero = genero.id_genero");
+        $sentencia->execute(array());
+        $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $detalletabla;
+    }
     public function traerResenia($id)
     {
         $sentencia = $this->db->prepare("SELECT * FROM resenia WHERE id_resenia = ?");

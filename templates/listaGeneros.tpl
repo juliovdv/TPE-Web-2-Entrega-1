@@ -1,16 +1,10 @@
-{include 'templates/header.tpl'}
-
-<div class="container">
-    <h1>Lista Generos</h1>
-    {include 'templates/formularioGenero.tpl'}
+<div class="container text-white">
+    <h4>Lista Generos</h4>
     <ul class="list-group list-padd">
-        {foreach from=$tabla item=genero}
-            <li class="list-group-item">
+        {foreach from=$tablagenero item=genero}
+            <li class="list-group-item bg-transparent">
             <b>{$genero->nombre}</b>
-            <a class="btn" href="eliminargenero/{$genero->id_genero}"> Borrar </a>
             </li>
         {/foreach}
     </ul>
 </div>
-
-{include 'templates/footer.tpl'}

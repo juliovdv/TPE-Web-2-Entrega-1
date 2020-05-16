@@ -1,3 +1,6 @@
+<div class="titulo-formulario">
+    <h5>Agregar pelicula </h5>
+</div>
 <form action="agregarresenia" method="POST">
     <div class="form-group">
         <label> Pelicula</label>
@@ -7,8 +10,9 @@
     <div class="form-group">
         <label>Genero</label>
         <select name="genero" class="form-control">
-            <option value="1">Terror</option>
-            <option value="2">Comedia</option>
+            {foreach from=$tablagenero item=genero}
+            <option value={$genero->id_genero}>{$genero->nombre}</option>
+            {/foreach}
         </select>
     </div>
 
@@ -17,5 +21,5 @@
         <textarea name="resenia" type="text" class="form-control" rows="3"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Agregar</button>
+    <button type="submit" class="btn btn-formulario">Agregar</button>
 </form>
