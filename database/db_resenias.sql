@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-05-2020 a las 16:15:42
+-- Tiempo de generación: 23-05-2020 a las 19:02:40
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.10
 
@@ -38,7 +38,10 @@ CREATE TABLE `genero` (
 --
 
 INSERT INTO `genero` (`id_genero`, `nombre`) VALUES
-(1, 'Terror');
+(6, 'Accion'),
+(7, 'Drama'),
+(8, 'Comedia'),
+(9, 'Terror');
 
 -- --------------------------------------------------------
 
@@ -59,10 +62,7 @@ CREATE TABLE `resenia` (
 --
 
 INSERT INTO `resenia` (`id_resenia`, `nombre_pelicula`, `usuario`, `resenia`, `id_genero`) VALUES
-(1, 'It', '', 'Hola', 1),
-(2, 'La gran fuga', '', 'Hermosa', 1),
-(3, 'La gran fuga', '', 'Hermosa', 1),
-(4, 'La gran fuga', 'Julio', 'Hermosa', 1);
+(17, 'Mi gran Noche', 'Julio', 'Buena', 8);
 
 --
 -- Índices para tablas volcadas
@@ -89,13 +89,13 @@ ALTER TABLE `resenia`
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `resenia`
 --
 ALTER TABLE `resenia`
-  MODIFY `id_resenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_resenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Restricciones para tablas volcadas
