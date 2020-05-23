@@ -5,6 +5,19 @@ class reseniasModel
     public function __construct()
     {
         $this->db = new PDO('mysql:host=localhost' . ';dbname=db_resenias;charset=utf8', 'root', '');
+        $host = 'localhost';
+        $userName = 'root';
+        $password = '';
+        $database = 'db_resenias';
+
+        try {
+            $this->db = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $userName, $password);
+            
+            // Solo en modo desarrollo
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        } catch (Exception $e) {
+            var_dump($e);
+        }
     }
 
     public function traerResenias()
@@ -35,5 +48,10 @@ class reseniasModel
     public function eliminarReseniaDB($id){
         $sentencia = $this->db->prepare('DELETE FROM resenia WHERE id_resenia = ?');
         $sentencia->execute([$id]);
+    }
+
+    public function editarReseniaDB($id, $nombrepelicula, $usuario, $resenia, $genero){
+        $sentencia = $this->db->prepare('UPDATE resenia SET nombre_pelicula = ?, usuario = ?, resenia = ?, id_genero = ? WHERE id_resenia = ?');
+        $sentencia->execute([$nombrepelicula, $usuario, $resenia, $genero, $id]);
     }
 }

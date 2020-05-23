@@ -5,6 +5,19 @@ class generosModel
     public function __construct()
     {
         $this->db = new PDO('mysql:host=localhost' . ';dbname=db_resenias;charset=utf8', 'root', '');
+        $host = 'localhost';
+        $userName = 'root';
+        $password = '';
+        $database = 'db_resenias';
+
+        try {
+            $this->db = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $userName, $password);
+            
+            // Solo en modo desarrollo
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        } catch (Exception $e) {
+            var_dump($e);
+        }
     }
     public function traerGeneros()
     {
@@ -16,6 +29,15 @@ class generosModel
     public function guardarGenero($genero){
         $sentencia = $this->db->prepare('INSERT INTO genero (nombre) VALUES (?)');
         return $sentencia->execute([$genero]);
+    }
+    public function editarGeneroDB($id, $genero){
+        $sentencia = $this->db->prepare('UPDATE genero SET nombre = ? WHERE id_genero = ?');
+        $sentencia->execute([$genero, $id]);
+
+    }
+    public function eliminarGeneroDB($id){
+        $sentencia = $this->db->prepare('DELETE FROM genero WHERE id_genero = ?');
+        $sentencia->execute([$id]);
     }
 }
 

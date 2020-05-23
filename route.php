@@ -46,14 +46,30 @@ switch ($urlParts[0]) {
         $controller = new reseniasController();
         $controller->eliminarResenia($urlParts[1]);
         break;
+    case 'modificarresenia':
+        $controller = new reseniasController();
+        $controller->modificarResenia($urlParts[1]);
+        break;
+    case 'editarresenia':
+        $controller = new reseniasController();
+        $controller->editarResenia($urlParts[1]);
+        break;    
     case 'agregargenero':
         $controller = new reseniasController();
         $controller->agregarGenero();
         break;
     case 'eliminargenero':
         $controller = new reseniasController();
-        //$controller->eliminarGenero($urlParts[1]); OJO! Falta
+        $controller->eliminarGenero($urlParts[1]); 
         break;
+    case 'modificargenero':
+        $controller = new reseniasController();
+        $controller->modificarGenero($urlParts[1]);
+        break;
+    case 'editargenero':
+        $controller = new reseniasController();
+        $controller->editarGenero($urlParts[1]);
+        break;   
     default:
         echo "<h1>Error 404 - Pagina no encontrada</h1>";
         break;
