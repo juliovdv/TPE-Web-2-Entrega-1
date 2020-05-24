@@ -19,10 +19,6 @@ class reseniasView
 
     function mostrarResenias($tablaresenia, $tablagenero)
     {
-        session_start();
-        if (($_SESSION["USUARIO"])) {
-            $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
-        }
         $this->smarty->assign('title', 'Reseñas');
         $this->smarty->assign('tablaresenia', $tablaresenia);
         $this->smarty->assign('tablagenero', $tablagenero);
@@ -37,11 +33,6 @@ class reseniasView
     }
     function mostrarReseniasporGenero($tabla)
     {
-        session_start();
-        if (($_SESSION["USUARIO"])) {
-            $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
-        }
-        $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
         $this->smarty->assign('title', 'Reseñas');
         $this->smarty->assign('tabla', $tabla);
         $this->smarty->display('templates/reseniasporgenero.tpl');
@@ -49,10 +40,6 @@ class reseniasView
 
     function mostrarDetalle($resenia, $genero)
     {
-        session_start();
-        if (($_SESSION["USUARIO"])) {
-            $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
-        }
         $this->smarty->assign('title', 'Generos');
         $this->smarty->assign('resenia', $resenia);
         $this->smarty->assign('genero', $genero->nombre);

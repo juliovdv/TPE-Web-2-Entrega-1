@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-05-2020 a las 19:02:40
+-- Tiempo de generación: 24-05-2020 a las 21:19:12
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.10
 
@@ -41,7 +41,8 @@ INSERT INTO `genero` (`id_genero`, `nombre`) VALUES
 (6, 'Accion'),
 (7, 'Drama'),
 (8, 'Comedia'),
-(9, 'Terror');
+(9, 'Terror'),
+(11, 'Animadas');
 
 -- --------------------------------------------------------
 
@@ -62,7 +63,30 @@ CREATE TABLE `resenia` (
 --
 
 INSERT INTO `resenia` (`id_resenia`, `nombre_pelicula`, `usuario`, `resenia`, `id_genero`) VALUES
-(17, 'Mi gran Noche', 'Julio', 'Buena', 8);
+(17, 'Mi gran Noche', 'Julio', 'Buena', 8),
+(18, 'Los tres chiflados', 'Julio', 'Buena', 8),
+(19, 'Rey leon', 'Julio', 'Buena', 11),
+(27, 'Its', 'Julio', 'Buena', 9),
+(28, 'Coraline', 'admin@admin.com', 'Buena', 11);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `id_usuario` int(11) NOT NULL,
+  `mail` varchar(100) NOT NULL,
+  `clave` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `mail`, `clave`) VALUES
+(1, 'admin@admin.com', '$2y$10$tWhegMJ8fheeOug05TP/dOsA.cL87sA4alHd6igAl7SlOZ/yvJVPK');
 
 --
 -- Índices para tablas volcadas
@@ -82,6 +106,13 @@ ALTER TABLE `resenia`
   ADD KEY `id_categoria` (`id_genero`);
 
 --
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD UNIQUE KEY `mail` (`mail`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -89,13 +120,19 @@ ALTER TABLE `resenia`
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `resenia`
 --
 ALTER TABLE `resenia`
-  MODIFY `id_resenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_resenia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
