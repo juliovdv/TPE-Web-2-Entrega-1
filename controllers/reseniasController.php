@@ -18,7 +18,7 @@ class reseniasController
 
     //Tabla resenias
     //Muestra toda la tabla resenias
-    public function tablaResenias()
+    public function listaResenias()
     {
         $tablaresenia = $this->modelResenias->traerResenias();
         $tablagenero = $this->modelGeneros->traerGeneros();
@@ -28,11 +28,11 @@ class reseniasController
     public function detalleResenia($id)
     {
         $resenia = $this->modelResenias->traerResenia($id);
-        $tablagenero = $this->modelGeneros->traerGeneros();
-        $this->view->mostrarDetalle($resenia,$tablagenero);
+        $genero = $this->modelGeneros->traerGenerosporID($resenia->id_genero);
+        $this->view->mostrarDetalle($resenia, $genero);
     }
     //Muestra resenias por genero
-    public function tablaReseniasporGeneros()
+    public function listaReseniasporGeneros()
     {
         $tabla = $this->modelResenias->traerReseniasporGeneros();
         $this->view->mostrarReseniasporGenero($tabla);
@@ -40,7 +40,7 @@ class reseniasController
 
     //Tabla generos
     //Muestra toda la tabla generos
-    public function tablaGeneros()
+    public function listaGeneros()
     {
         $tabla = $this->modelGeneros->traerGeneros();
         $this->view->mostrarGeneros($tabla);
@@ -49,6 +49,7 @@ class reseniasController
     //Administrador
     public function admin()
     {
+        $this->sesionIniciada();
         $tablaGeneros = $this->modelGeneros->traerGeneros();
         $tablaResenias = $this->modelResenias->traerResenias();
         $this->view->vistaAdmin($tablaResenias, $tablaGeneros);
@@ -57,27 +58,32 @@ class reseniasController
     //Agrega una resenia
     public function agregarResenia()
     {
+        $this->sesionIniciada();
         $nombrepelicula = $_POST['nombre_pelicula'];
-        $usuario = 'Julio';
+        $usuario =  $_SESSION["USUARIO"];
         $resenia = $_POST['resenia'];
         $genero = $_POST['genero'];
-
-        $success = $this->modelResenias->guardarResenia($nombrepelicula, $usuario, $resenia, $genero);
+        if (empty($nombrepelicula) || empty($usuario) || empty($resenia) || empty($resenia))
+            $this->view->mensajeError("Complete todos los campos");
+        else
+            $success = $this->modelResenias->guardarResenia($nombrepelicula, $usuario, $resenia, $genero);
 
         if ($success)
             header('Location: ' . BASE_URL . "admin");
         else
-            print_r('Error'); //$this->view->showError("Faltan datos obligatorios"); OJO! Falta
+            $this->view->mensajeError("El agregado no ha se completo correctamente");
     }
     //Borrar una resenia por id
     public function eliminarResenia($id)
     {
+        $this->sesionIniciada();
         $this->modelResenias->eliminarReseniaDB($id);
         header('Location: ' . BASE_URL . "admin");
     }
 
     public function modificarResenia($id)
     {
+        $this->sesionIniciada();
         $resenia = $this->modelResenias->traerResenia($id);
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->vistaEditarResenia($id, $resenia, $tablagenero);
@@ -85,8 +91,9 @@ class reseniasController
 
     public function editarResenia($id)
     {
+        $this->sesionIniciada();
         $nombrepelicula = $_POST['nombre_pelicula'];
-        $usuario = 'Julio';
+        $usuario =  $_SESSION["USUARIO"];
         $resenia = $_POST['resenia'];
         $genero = $_POST['genero'];
         $this->modelResenias->editarReseniaDB($id, $nombrepelicula, $usuario, $resenia, $genero);
@@ -97,30 +104,48 @@ class reseniasController
     //Agrega un genero
     public function agregarGenero()
     {
+        $this->sesionIniciada();
         $genero = $_POST['genero'];
-        $success = $this->modelGeneros->guardarGenero($genero);
+        if (empty($genero))
+            $this->view->mensajeError("Complete todos los campos");
+        else
+            $success = $this->modelGeneros->guardarGenero($genero);
         if ($success)
             header('Location: ' . BASE_URL . "admin");
         else
-            print_r('Error'); //$this->view->showError("Faltan datos obligatorios"); OJO! Falta
+            $this->view->mensajeError("El agregado no ha se completo correctamente ");
     }
     //Eliminar genero
     public function eliminarGenero($id)
     {
-        $this->modelGeneros->eliminarGeneroDB($id);
-        header('Location: ' . BASE_URL . "admin");
+        $this->sesionIniciada();
+        $success = $this->modelGeneros->eliminarGeneroDB($id);
+        if ($success)
+            header('Location: ' . BASE_URL . "admin");
+        else
+            $this->view->mensajeError("El eliminado no ha se completo correctamente, es posible que alla reseñas vinculadas a este genero. ");
     }
 
     //Editar Genero
-    public function modificarGenero($id){
+    public function modificarGenero($id)
+    {
+        $this->sesionIniciada();
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->vistaEditarGenero($id, $tablagenero);
-
     }
-    public function editarGenero($id){
+    public function editarGenero($id)
+    {
+        $this->sesionIniciada();
         $genero = $_POST['genero'];
         $this->modelGeneros->editarGeneroDB($id, $genero);
         header('Location: ' . BASE_URL . "admin");
+    }
 
+    private function sesionIniciada(){
+        session_start();
+        if (!isset($_SESSION["ID_USUARIO"])){
+            $this->view->vistaLogin("Esta opcion requiere ser un usuario registrado");
+            die();
+        }
     }
 }

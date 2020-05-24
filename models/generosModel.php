@@ -12,9 +12,6 @@ class generosModel
 
         try {
             $this->db = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $userName, $password);
-            
-            // Solo en modo desarrollo
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         } catch (Exception $e) {
             var_dump($e);
         }
@@ -25,6 +22,12 @@ class generosModel
         $sentencia->execute(array());
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
+    }
+    public function traerGenerosporID($id){
+        $sentencia = $this->db->prepare("SELECT * FROM genero WHERE id_genero = ?");
+        $sentencia->execute(array(($id)));   
+        $detalle = $sentencia->fetch(PDO::FETCH_OBJ);
+        return $detalle;
     }
     public function guardarGenero($genero){
         $sentencia = $this->db->prepare('INSERT INTO genero (nombre) VALUES (?)');
@@ -37,7 +40,8 @@ class generosModel
     }
     public function eliminarGeneroDB($id){
         $sentencia = $this->db->prepare('DELETE FROM genero WHERE id_genero = ?');
-        $sentencia->execute([$id]);
+        return $sentencia->execute([$id]);
+        
     }
 }
 

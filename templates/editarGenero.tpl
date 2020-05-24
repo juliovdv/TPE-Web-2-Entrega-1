@@ -12,5 +12,6 @@
 
 
     <button type="submit" class="btn btn-formulario">Modificar</button>
+  
 </form>
 {include 'templates/footer.tpl'}

@@ -29,6 +29,13 @@
                         <a class="text-white" href="{$admin}">Admin</a>
                     </li>
                 </ul>
+                {if isset($usuario)}
+                    <div class="navbar-nav ml-auto">
+                        <span class="navbar-text nav-link active">{$usuario}</span>
+                        <a class="nav-item nav-link " href="salir">Salir<span class="sr-only"></span></a>
+                    </div>
+                {/if}
+
             </nav>
         </header>
         <div class="cuerpo">

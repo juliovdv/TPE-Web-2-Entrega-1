@@ -9,17 +9,18 @@ header {
     background-color: steelblue;
 }
 .cuerpo {
-    height: 750px;
+    height: 650px;
     background-color: lightgray;
 }
 
 footer{
     height:120px;
     background-color: steelblue;
+    text-align: center;
 }
 .sidenav{
     background-color: steelblue;
-    height: 735px;
+    height: 640px;
 }
 
 .btn-formulario{

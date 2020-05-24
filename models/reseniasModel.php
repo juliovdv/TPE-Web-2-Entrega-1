@@ -12,9 +12,6 @@ class reseniasModel
 
         try {
             $this->db = new PDO("mysql:host=$host;dbname=$database;charset=utf8", $userName, $password);
-            
-            // Solo en modo desarrollo
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         } catch (Exception $e) {
             var_dump($e);
         }
@@ -29,7 +26,7 @@ class reseniasModel
     }
     public function traerReseniasporGeneros()
     {
-        $sentencia = $this->db->prepare("SELECT * FROM resenia JOIN genero ON resenia.id_genero = genero.id_genero");
+        $sentencia = $this->db->prepare("SELECT * FROM resenia JOIN genero ON resenia.id_genero = genero.id_genero ORDER BY genero.nombre");
         $sentencia->execute(array());
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
@@ -48,6 +45,7 @@ class reseniasModel
     public function eliminarReseniaDB($id){
         $sentencia = $this->db->prepare('DELETE FROM resenia WHERE id_resenia = ?');
         $sentencia->execute([$id]);
+
     }
 
     public function editarReseniaDB($id, $nombrepelicula, $usuario, $resenia, $genero){

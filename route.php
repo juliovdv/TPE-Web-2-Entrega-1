@@ -16,7 +16,7 @@ $urlParts = explode('/', $_GET['action']);
 switch ($urlParts[0]) {
     case 'resenias':
         $controller = new reseniasController();
-        $controller->tablaResenias();
+        $controller->listaResenias();
         break;
     case 'detalle':
         $controller = new reseniasController();
@@ -24,11 +24,11 @@ switch ($urlParts[0]) {
         break;
     case 'generos':
         $controller = new reseniasController();
-        $controller->tablaGeneros();
+        $controller->listaGeneros();
         break;
     case 'reseniasgenero':
         $controller = new reseniasController();
-        $controller->tablaReseniasporGeneros();
+        $controller->listaReseniasporGeneros();
         break;
     case 'login':
         $controller = new usuariosController();
@@ -69,7 +69,15 @@ switch ($urlParts[0]) {
     case 'editargenero':
         $controller = new reseniasController();
         $controller->editarGenero($urlParts[1]);
-        break;   
+        break;
+    case 'verificar':
+        $controller = new usuariosController();
+        $controller->verificarUsuario();
+        break;
+    case 'salir':
+        $controller = new usuariosController();
+        $controller->cerrarSesion();
+        break;      
     default:
         echo "<h1>Error 404 - Pagina no encontrada</h1>";
         break;
