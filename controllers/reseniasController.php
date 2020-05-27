@@ -38,6 +38,14 @@ class reseniasController
         $this->view->mostrarReseniasporGenero($tabla);
     }
 
+    //Muestra reseñas por generos
+    public function listaReseniasxGeneros($id_genero)
+    {
+        $tablaresenia = $this->modelResenias->filtrarReseniasxGeneros($id_genero);
+        $tablagenero = $this->modelGeneros->traerGeneros();
+        $this->view->mostrarResenias($tablaresenia, $tablagenero);
+    }
+
     //Tabla generos
     //Muestra toda la tabla generos
     public function listaGeneros()
@@ -91,13 +99,16 @@ class reseniasController
 
     public function editarResenia($id)
     {
-        $this->sesionIniciada();
-        $nombrepelicula = $_POST['nombre_pelicula'];
-        $usuario =  $_SESSION["USUARIO"];
-        $resenia = $_POST['resenia'];
-        $genero = $_POST['genero'];
-        $this->modelResenias->editarReseniaDB($id, $nombrepelicula, $usuario, $resenia, $genero);
-        header('Location: ' . BASE_URL . "admin");
+        if (!empty($nombrepelicula) || !empty($usuario) || !empty($resenia) || !empty($resenia)) {
+            $this->sesionIniciada();
+            $nombrepelicula = $_POST['nombre_pelicula'];
+            $usuario =  $_SESSION["USUARIO"];
+            $resenia = $_POST['resenia'];
+            $genero = $_POST['genero'];
+            $this->modelResenias->editarReseniaDB($id, $nombrepelicula, $usuario, $resenia, $genero);
+            header('Location: ' . BASE_URL . "admin");
+        } else
+            $this->view->mensajeError("Complete todos los campos");
     }
 
     //Tabla genero
@@ -137,13 +148,17 @@ class reseniasController
     {
         $this->sesionIniciada();
         $genero = $_POST['genero'];
-        $this->modelGeneros->editarGeneroDB($id, $genero);
-        header('Location: ' . BASE_URL . "admin");
+        if (!empty($genero)) {
+            $this->modelGeneros->editarGeneroDB($id, $genero);
+            header('Location: ' . BASE_URL . "admin");
+        } else
+            $this->view->mensajeError("Complete todos los campos");
     }
 
-    private function sesionIniciada(){
+    private function sesionIniciada()
+    {
         session_start();
-        if (!isset($_SESSION["ID_USUARIO"])){
+        if (!isset($_SESSION["ID_USUARIO"])) {
             $this->view->vistaLogin("Esta opcion requiere ser un usuario registrado");
             die();
         }

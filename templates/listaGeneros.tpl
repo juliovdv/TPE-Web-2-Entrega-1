@@ -4,6 +4,8 @@
         {foreach from=$tablagenero item=genero}
             <li class="list-group-item bg-transparent">
             <b>{$genero->nombre}</b>
+            <a class="btn" href="reseniasxgenero/{$genero->id_genero}">Ver reseñas</a>
+
             </li>
         {/foreach}
     </ul>

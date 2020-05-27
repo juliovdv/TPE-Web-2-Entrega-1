@@ -26,6 +26,10 @@ switch ($urlParts[0]) {
         $controller = new reseniasController();
         $controller->listaGeneros();
         break;
+    case 'reseniasxgenero':
+        $controller = new reseniasController();
+        $controller->listaReseniasxGeneros($urlParts[1]);
+        break;
     case 'reseniasgenero':
         $controller = new reseniasController();
         $controller->listaReseniasporGeneros();

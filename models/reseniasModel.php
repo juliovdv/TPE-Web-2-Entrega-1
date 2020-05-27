@@ -52,4 +52,9 @@ class reseniasModel
         $sentencia = $this->db->prepare('UPDATE resenia SET nombre_pelicula = ?, usuario = ?, resenia = ?, id_genero = ? WHERE id_resenia = ?');
         $sentencia->execute([$nombrepelicula, $usuario, $resenia, $genero, $id]);
     }
+    public function filtrarReseniasxGeneros($id_genero){
+        $sentencia = $this->db->prepare("SELECT * FROM resenia WHERE id_genero = ?");
+        $sentencia->execute(array(($id_genero)));   
+        return $sentencia->fetchall(PDO::FETCH_OBJ);
+    }
 }
