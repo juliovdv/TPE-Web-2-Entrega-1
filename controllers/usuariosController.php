@@ -16,6 +16,7 @@ class usuariosController
         $this->model = new usuariosModel();
     }
 
+    //**Llama a la vista del login */
     public function mostrarLogin()
     {
         session_start();
@@ -26,6 +27,7 @@ class usuariosController
         }
     }
 
+    //**Verifica la validez de el usuario y la clave */
     public function verificarUsuario()
     {
         if (!empty($_POST['usuario']) && !empty($_POST['clave'])) {
@@ -44,6 +46,7 @@ class usuariosController
             $this->view->vistaLogin("Error complete todos los campos");
         }
     }
+    //**Elimina la sesion iniciada */
     public function cerrarSesion() {
         session_start();
         session_destroy();

@@ -17,28 +17,29 @@ class reseniasController
     }
 
     //Tabla resenias
-    //Muestra toda la tabla resenias
+
+    //** Muestra toda la tabla resenias */
     public function listaResenias()
     {
         $tablaresenia = $this->modelResenias->traerResenias();
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->mostrarResenias($tablaresenia, $tablagenero);
     }
-    //Muestra en detalle una resenia
+    //** Muestra en detalle una resenia */
     public function detalleResenia($id)
     {
         $resenia = $this->modelResenias->traerResenia($id);
         $genero = $this->modelGeneros->traerGenerosporID($resenia->id_genero);
         $this->view->mostrarDetalle($resenia, $genero);
     }
-    //Muestra resenias por genero
+    //** Muestra tolas las reseñas agrupadas por genero */
     public function listaReseniasporGeneros()
     {
         $tabla = $this->modelResenias->traerReseniasporGeneros();
         $this->view->mostrarReseniasporGenero($tabla);
     }
 
-    //Muestra reseñas por generos
+    //** Toma id de generos y filtra las reseñas que corresponden a este */
     public function listaReseniasxGeneros($id_genero)
     {
         $tablaresenia = $this->modelResenias->filtrarReseniasxGeneros($id_genero);
@@ -47,14 +48,17 @@ class reseniasController
     }
 
     //Tabla generos
-    //Muestra toda la tabla generos
+
+    //** Trae la tabla de generos y llama a la vista para mostrarlo */
     public function listaGeneros()
     {
         $tabla = $this->modelGeneros->traerGeneros();
         $this->view->mostrarGeneros($tabla);
     }
 
-    //Administrador
+    //Funciones de adminiostrador
+
+    //**Llama a la funcion vista Administrador */
     public function admin()
     {
         $this->sesionIniciada();
@@ -63,7 +67,8 @@ class reseniasController
         $this->view->vistaAdmin($tablaResenias, $tablaGeneros);
     }
     //Tabla Resenias
-    //Agrega una resenia
+
+    //**Toma los valores por POST y llama a la funcion para agregar una reseña a la base de datos */
     public function agregarResenia()
     {
         $this->sesionIniciada();
@@ -81,14 +86,14 @@ class reseniasController
         else
             $this->view->mensajeError("El agregado no ha se completo correctamente");
     }
-    //Borrar una resenia por id
+    //**Toma el id de una reseña y llama a la funcion para eliminarla de la base de datos */
     public function eliminarResenia($id)
     {
         $this->sesionIniciada();
         $this->modelResenias->eliminarReseniaDB($id);
         header('Location: ' . BASE_URL . "admin");
     }
-
+    //**Llama a la vista Editar reseña */
     public function modificarResenia($id)
     {
         $this->sesionIniciada();
@@ -96,7 +101,7 @@ class reseniasController
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->vistaEditarResenia($id, $resenia, $tablagenero);
     }
-
+    //**Toma los datos por POST y llama a la funcion para modificarlos en la base de datos segun el ID  */
     public function editarResenia($id)
     {
         if (!empty($nombrepelicula) || !empty($usuario) || !empty($resenia) || !empty($resenia)) {
@@ -112,7 +117,8 @@ class reseniasController
     }
 
     //Tabla genero
-    //Agrega un genero
+
+    //** Agrega un genero */
     public function agregarGenero()
     {
         $this->sesionIniciada();
@@ -126,7 +132,7 @@ class reseniasController
         else
             $this->view->mensajeError("El agregado no ha se completo correctamente ");
     }
-    //Eliminar genero
+    //** Eliminar genero por id */
     public function eliminarGenero($id)
     {
         $this->sesionIniciada();
@@ -137,13 +143,14 @@ class reseniasController
             $this->view->mensajeError("El eliminado no ha se completo correctamente, es posible que alla reseñas vinculadas a este genero. ");
     }
 
-    //Editar Genero
+    //** Llama a la vista editar genero */
     public function modificarGenero($id)
     {
         $this->sesionIniciada();
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->vistaEditarGenero($id, $tablagenero);
     }
+    //** Toma parametros por POST y llama a la funcion para editar un genero */
     public function editarGenero($id)
     {
         $this->sesionIniciada();
@@ -155,6 +162,7 @@ class reseniasController
             $this->view->mensajeError("Complete todos los campos");
     }
 
+    //**Si no hay sesion iniciada te lleva a la pantalla de login */
     private function sesionIniciada()
     {
         session_start();

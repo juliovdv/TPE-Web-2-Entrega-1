@@ -16,7 +16,7 @@ class reseniasModel
             var_dump($e);
         }
     }
-
+    //** Trae todas las tuplas de la tabla reseña */
     public function traerResenias()
     {
         $sentencia = $this->db->prepare("SELECT * FROM resenia");
@@ -24,6 +24,8 @@ class reseniasModel
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
     }
+
+    //**Hace un JOIN entre la tabla resenia y genero y los devuelve ordenados por la columna nombre de la tabla genero */
     public function traerReseniasporGeneros()
     {
         $sentencia = $this->db->prepare("SELECT * FROM resenia JOIN genero ON resenia.id_genero = genero.id_genero ORDER BY genero.nombre");
@@ -31,6 +33,7 @@ class reseniasModel
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
     }
+    //**Trae una tupla de la tabla resenia por id */
     public function traerResenia($id)
     {
         $sentencia = $this->db->prepare("SELECT * FROM resenia WHERE id_resenia = ?");
@@ -38,6 +41,8 @@ class reseniasModel
         $detalle = $sentencia->fetch(PDO::FETCH_OBJ);
         return $detalle;
     }
+
+    //**Inserta una tupla en la tabla resenia */
     public function guardarResenia($nombrepelicula, $usuario, $resenia, $genero){
         $sentencia = $this->db->prepare('INSERT INTO resenia (nombre_pelicula, usuario, resenia, id_genero) VALUES (?, ?, ?, ?)');
         return $sentencia->execute([$nombrepelicula ,$usuario , $resenia, $genero]);

@@ -16,7 +16,7 @@ class usuariosModel
             var_dump($e);
         }
     }
-
+    //**Trae la tupla que se corresponda con el usuario pasado por parametro */
     public function traerUsuario($usuario){
         $sentencia = $this->db->prepare("SELECT * FROM usuario WHERE mail = ?");
         $sentencia->execute(array(($usuario)));   

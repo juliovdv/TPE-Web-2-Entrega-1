@@ -16,7 +16,7 @@ class reseniasView
         $this->smarty->assign('reseniasgenero', BASE_URL . 'reseniasgenero');
         $this->smarty->assign('admin', BASE_URL . 'admin');
     }
-
+    //**Vista de la pantalla home, muestra la lista de generos y la lista de reseñas */
     function mostrarResenias($tablaresenia, $tablagenero)
     {
         $this->smarty->assign('title', 'Reseñas');
@@ -24,6 +24,7 @@ class reseniasView
         $this->smarty->assign('tablagenero', $tablagenero);
         $this->smarty->display('templates/home.tpl');
     }
+    //**Muestra la lista genero */
     function mostrarGeneros($tabla)
     {
 
@@ -31,13 +32,15 @@ class reseniasView
         $this->smarty->assign('tabla', $tabla);
         $this->smarty->display('templates/listaGeneros.tpl');
     }
+
+    //** Muestra la lista de reseñas */
     function mostrarReseniasporGenero($tabla)
     {
         $this->smarty->assign('title', 'Reseñas');
         $this->smarty->assign('tabla', $tabla);
         $this->smarty->display('templates/reseniasporgenero.tpl');
     }
-
+    //**Muestra e detalle de una reseña  */
     function mostrarDetalle($resenia, $genero)
     {
         $this->smarty->assign('title', 'Generos');
@@ -45,13 +48,14 @@ class reseniasView
         $this->smarty->assign('genero', $genero->nombre);
         $this->smarty->display('templates/vistaResenia.tpl');
     }
-
+    //**Muestra la pantalla del login */
     public function vistaLogin($mensaje = null)
     {
         $this->smarty->assign('mensaje', $mensaje);
         $this->smarty->assign('title', 'Login');
         $this->smarty->display('templates/login.tpl');
     }
+    //**Muestra la vista de administrador */
     public function vistaAdmin($tablaresenia, $tablagenero)
     {
         $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
@@ -60,7 +64,7 @@ class reseniasView
         $this->smarty->assign('tablagenero', $tablagenero);
         $this->smarty->display('templates/admin.tpl');
     }
-
+    //** Muestra el formulario para editar reseñas */
     public function vistaEditarResenia($id, $resenia, $tablagenero)
     {
         $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
@@ -70,7 +74,7 @@ class reseniasView
         $this->smarty->assign('tablagenero', $tablagenero);
         $this->smarty->display('templates/editarResenia.tpl');
     }
-
+    //**Muestra el formulario de editar genero */
     public function vistaEditarGenero($id, $tablagenero)
     {
         $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
@@ -79,6 +83,7 @@ class reseniasView
         $this->smarty->assign('tablagenero', $tablagenero);
         $this->smarty->display('templates/editarGenero.tpl');
     }
+    //**Recibe un error por parametro y lo muestra */
     public function mensajeError($mensaje)
     {
         if (isset($_SESSION["ID_USUARIO"])) {
