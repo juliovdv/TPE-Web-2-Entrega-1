@@ -42,24 +42,36 @@ class reseniasModel
         return $detalle;
     }
 
-    //**Inserta una tupla en la tabla resenia */
-    public function guardarResenia($nombrepelicula, $usuario, $resenia, $genero){
-        $sentencia = $this->db->prepare('INSERT INTO resenia (nombre_pelicula, usuario, resenia, id_genero) VALUES (?, ?, ?, ?)');
-        return $sentencia->execute([$nombrepelicula ,$usuario , $resenia, $genero]);
+    //**Inserta una nueva reseña en la tabla resenia*/
+    public function guardarResenia($nombrepelicula, $usuario, $resenia, $genero, $imagen = null){
+        $pathImg = null;
+        if ($imagen)
+            $pathImg = $this->uploadImage($imagen);
+            print_r($pathImg);
+        $sentencia = $this->db->prepare('INSERT INTO resenia (nombre_pelicula, usuario, resenia, id_genero, img) VALUES (?, ?, ?, ?, ?)');
+        return $sentencia->execute([$nombrepelicula ,$usuario , $resenia, $genero, $pathImg]);
     }
+    //**Elimina una tupla por id de la tabla resenia */
     public function eliminarReseniaDB($id){
         $sentencia = $this->db->prepare('DELETE FROM resenia WHERE id_resenia = ?');
         $sentencia->execute([$id]);
 
     }
-
+    //**Edita una tupla de la tabla resenia por id */
     public function editarReseniaDB($id, $nombrepelicula, $usuario, $resenia, $genero){
         $sentencia = $this->db->prepare('UPDATE resenia SET nombre_pelicula = ?, usuario = ?, resenia = ?, id_genero = ? WHERE id_resenia = ?');
         $sentencia->execute([$nombrepelicula, $usuario, $resenia, $genero, $id]);
     }
+
+    //**Trae las tuplas de la tabla resenia que se correspondan con el id_genero */
     public function filtrarReseniasxGeneros($id_genero){
         $sentencia = $this->db->prepare("SELECT * FROM resenia WHERE id_genero = ?");
         $sentencia->execute(array(($id_genero)));   
         return $sentencia->fetchall(PDO::FETCH_OBJ);
+    }
+    private function uploadImage($imagen) {
+        $target = 'uploads/caratulas/' . uniqid() . '.jpg';
+        move_uploaded_file($imagen, $target);
+        return $target;
     }
 }

@@ -78,8 +78,12 @@ class reseniasController
         $genero = $_POST['genero'];
         if (empty($nombrepelicula) || empty($usuario) || empty($resenia) || empty($resenia))
             $this->view->mensajeError("Complete todos los campos");
-        else
-            $success = $this->modelResenias->guardarResenia($nombrepelicula, $usuario, $resenia, $genero);
+        else {
+            if ($_FILES['input_name']['type'] == "image/jpg" || $_FILES['input_name']['type'] == "image/jpeg" || $_FILES['input_name']['type'] == "image/png")
+                $success = $this->modelResenias->guardarResenia($nombrepelicula, $usuario, $resenia, $genero, $_FILES['input_name']['tmp_name']);
+            else
+                $success = $this->modelResenias->guardarResenia($nombrepelicula, $usuario, $resenia, $genero);
+        }
 
         if ($success)
             header('Location: ' . BASE_URL . "admin");
@@ -104,7 +108,7 @@ class reseniasController
     //**Toma los datos por POST y llama a la funcion para modificarlos en la base de datos segun el ID  */
     public function editarResenia($id)
     {
-        if (!empty($nombrepelicula) || !empty($usuario) || !empty($resenia) || !empty($resenia)) {
+        if (empty($nombrepelicula) || empty($usuario) || empty($resenia) || empty($resenia)) {
             $this->sesionIniciada();
             $nombrepelicula = $_POST['nombre_pelicula'];
             $usuario =  $_SESSION["USUARIO"];
