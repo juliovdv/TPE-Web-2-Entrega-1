@@ -42,7 +42,6 @@ class generosModel
     public function editarGeneroDB($id, $genero){
         $sentencia = $this->db->prepare('UPDATE genero SET nombre = ? WHERE id_genero = ?');
         $sentencia->execute([$genero, $id]);
-
     }
     //**Elimina un genero segun id */
     public function eliminarGeneroDB($id){
@@ -51,5 +50,4 @@ class generosModel
         
     }
 }
-
 ?>

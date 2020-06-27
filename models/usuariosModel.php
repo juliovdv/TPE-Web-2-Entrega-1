@@ -21,8 +21,23 @@ class usuariosModel
         $sentencia = $this->db->prepare("SELECT * FROM usuario WHERE mail = ?");
         $sentencia->execute(array(($usuario)));   
         return $sentencia->fetch(PDO::FETCH_OBJ);
-       
+    }
+    public function guardarUsuario($usuario, $clave, $admin){
+        $sentencia = $this->db->prepare('INSERT INTO usuario (mail, clave, admin) VALUES (?, ?, ?)');
+        return $sentencia->execute([$usuario, $clave, $admin]);
+    }
 
+    public function hacerAdmin($id, $admin){
+        $sentencia = $this->db->prepare('UPDATE usuario SET admin = ? WHERE id_usuario = ?');
+        $sentencia->execute([$admin, $id]);
+    }
+    public function actualizarClave($id, $clave){
+        $sentencia = $this->db->prepare('UPDATE usuario SET clave = ? WHERE id_usuario = ?');
+        $sentencia->execute([$clave, $id]);
+    }
+    public function borrarUsuario($id){
+    $sentencia = $this->db->prepare('DELETE FROM usuario WHERE id_usuario = ?');
+        return $sentencia->execute([$id]);
     }
 }
 ?>

@@ -78,10 +78,15 @@ switch ($urlParts[0]) {
         $controller = new usuariosController();
         $controller->verificarUsuario();
         break;
+    case 'crearusuario':
+        $controller = new usuariosController();
+        $controller->crearUsuario();
+        break;
+    
     case 'salir':
         $controller = new usuariosController();
         $controller->cerrarSesion();
-        break;      
+        break;
     default:
         echo "<h1>Error 404 - Pagina no encontrada</h1>";
         break;

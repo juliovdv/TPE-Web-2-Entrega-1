@@ -15,6 +15,7 @@ class reseniasView
         $this->smarty->assign('resenias', BASE_URL . 'resenias');
         $this->smarty->assign('reseniasgenero', BASE_URL . 'reseniasgenero');
         $this->smarty->assign('admin', BASE_URL . 'admin');
+
     }
     //**Vista de la pantalla home, muestra la lista de generos y la lista de reseñas */
     function mostrarResenias($tablaresenia, $tablagenero)

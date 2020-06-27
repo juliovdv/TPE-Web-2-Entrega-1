@@ -14,6 +14,7 @@ class usuariosController
     {
         $this->view = new reseniasView();
         $this->model = new usuariosModel();
+
     }
 
     //**Llama a la vista del login */
@@ -26,7 +27,6 @@ class usuariosController
             $this->view->vistaLogin();
         }
     }
-
     //**Verifica la validez de el usuario y la clave */
     public function verificarUsuario()
     {
@@ -51,5 +51,20 @@ class usuariosController
         session_start();
         session_destroy();
         header("Location: " . BASE_URL . 'resenias');
+    }
+
+    public function crearUsuario(){
+        if (!empty($_POST['usuario']) && !empty($_POST['clave'])) {
+            $usuario = $_POST['usuario'];
+            $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
+            $this->model->guardarUsuario($usuario, $clave, '0');
+            $usuarioDB = $this->model->traerUsuario($usuario);
+            session_start();
+            $_SESSION["ID_USUARIO"] = $usuarioDB->id_usuario;
+            $_SESSION["USUARIO"] = $usuarioDB->mail;
+            header('Location: ' . BASE_URL . "resenias");
+            } else {
+            $this->view->vistaLogin("Error complete todos los campos");
+        }
     }
 }
