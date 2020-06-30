@@ -2,6 +2,8 @@
 
 include_once('views/reseniasView.php');
 include_once('models/usuariosModel.php');
+include_once('helpers/auth.helper.php');
+
 
 
 class usuariosController
@@ -14,13 +16,12 @@ class usuariosController
     {
         $this->view = new reseniasView();
         $this->model = new usuariosModel();
-
     }
 
     //**Llama a la vista del login */
     public function mostrarLogin()
     {
-        session_start();
+        AuthHelper::iniciaSesion();
         if (isset($_SESSION["ID_USUARIO"])) {
             $this->view->mensajeError("Ya existe un usuario logueado");
         } else {
@@ -35,10 +36,7 @@ class usuariosController
             $clave = $_POST['clave'];
             $usuarioDB = $this->model->traerUsuario($usuario);
             if (!empty($usuarioDB) && password_verify($clave, $usuarioDB->clave)) {
-                session_start();
-                $_SESSION["ID_USUARIO"] = $usuarioDB->id_usuario;
-                $_SESSION["USUARIO"] = $usuarioDB->mail;
-                header('Location: ' . BASE_URL . "admin");
+                AuthHelper::logeaUsuario($usuarioDB);
             } else {
                 $this->view->vistaLogin("El campo mail o clave son incorrectos");
             }
@@ -47,24 +45,24 @@ class usuariosController
         }
     }
     //**Elimina la sesion iniciada */
-    public function cerrarSesion() {
+    public function cerrarSesion()
+    {
         session_start();
         session_destroy();
         header("Location: " . BASE_URL . 'resenias');
     }
 
-    public function crearUsuario(){
+    public function crearUsuario()
+    {
         if (!empty($_POST['usuario']) && !empty($_POST['clave'])) {
             $usuario = $_POST['usuario'];
             $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
             $this->model->guardarUsuario($usuario, $clave, '0');
             $usuarioDB = $this->model->traerUsuario($usuario);
-            session_start();
-            $_SESSION["ID_USUARIO"] = $usuarioDB->id_usuario;
-            $_SESSION["USUARIO"] = $usuarioDB->mail;
-            header('Location: ' . BASE_URL . "resenias");
-            } else {
+            AuthHelper::logeaUsuario($usuarioDB);
+        } else {
             $this->view->vistaLogin("Error complete todos los campos");
         }
     }
 }
+?>

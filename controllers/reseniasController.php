@@ -2,6 +2,10 @@
 include_once('models/generosModel.php');
 include_once('models/reseniasModel.php');
 include_once('views/reseniasView.php');
+include_once('helpers/auth.helper.php');
+
+
+
 
 class reseniasController
 {
@@ -21,6 +25,7 @@ class reseniasController
     //** Muestra toda la tabla resenias */
     public function listaResenias()
     {
+
         $tablaresenia = $this->modelResenias->traerResenias();
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->mostrarResenias($tablaresenia, $tablagenero);
@@ -28,6 +33,7 @@ class reseniasController
     //** Muestra en detalle una resenia */
     public function detalleResenia($id)
     {
+
         $resenia = $this->modelResenias->traerResenia($id);
         $genero = $this->modelGeneros->traerGenerosporID($resenia->id_genero);
         $this->view->mostrarDetalle($resenia, $genero);
@@ -35,6 +41,7 @@ class reseniasController
     //** Muestra tolas las reseñas agrupadas por genero */
     public function listaReseniasporGeneros()
     {
+
         $tabla = $this->modelResenias->traerReseniasporGeneros();
         $this->view->mostrarReseniasporGenero($tabla);
     }
@@ -42,6 +49,7 @@ class reseniasController
     //** Toma id de generos y filtra las reseñas que corresponden a este */
     public function listaReseniasxGeneros($id_genero)
     {
+
         $tablaresenia = $this->modelResenias->filtrarReseniasxGeneros($id_genero);
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->mostrarResenias($tablaresenia, $tablagenero);
@@ -61,7 +69,7 @@ class reseniasController
     //**Llama a la funcion vista Administrador */
     public function admin()
     {
-        $this->sesionIniciada();
+        AuthHelper::estaLogueado();
         $tablaGeneros = $this->modelGeneros->traerGeneros();
         $tablaResenias = $this->modelResenias->traerResenias();
         $this->view->vistaAdmin($tablaResenias, $tablaGeneros);
@@ -71,7 +79,7 @@ class reseniasController
     //**Toma los valores por POST y llama a la funcion para agregar una reseña a la base de datos */
     public function agregarResenia()
     {
-        $this->sesionIniciada();
+        AuthHelper::estaLogueado();
         $nombrepelicula = $_POST['nombre_pelicula'];
         $usuario =  $_SESSION["USUARIO"];
         $resenia = $_POST['resenia'];
@@ -93,27 +101,28 @@ class reseniasController
     //**Toma el id de una reseña y llama a la funcion para eliminarla de la base de datos */
     public function eliminarResenia($id)
     {
-        $this->sesionIniciada();
+        AuthHelper::estaLogueado();
         $this->modelResenias->eliminarReseniaDB($id);
         header('Location: ' . BASE_URL . "admin");
     }
     //**Llama a la vista Editar reseña */
     public function modificarResenia($id)
     {
-        $this->sesionIniciada();
+        AuthHelper::estaLogueado();
         $resenia = $this->modelResenias->traerResenia($id);
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->vistaEditarResenia($id, $resenia, $tablagenero);
     }
     //**Toma los datos por POST y llama a la funcion para modificarlos en la base de datos segun el ID  */
-    public function editarResenia($id)
-    {
-        if (empty($nombrepelicula) || empty($usuario) || empty($resenia) || empty($resenia)) {
-            $this->sesionIniciada();
-            $nombrepelicula = $_POST['nombre_pelicula'];
-            $usuario =  $_SESSION["USUARIO"];
-            $resenia = $_POST['resenia'];
-            $genero = $_POST['genero'];
+    public function editarResenia()
+    {   
+        AuthHelper::estaLogueado();
+        $nombrepelicula = $_POST['nombre_pelicula'];
+        $usuario =  $_SESSION["USUARIO"];
+        $resenia = $_POST['resenia'];
+        $genero = $_POST['genero'];
+        $id = $_POST['id_resenia'];
+        if (!empty($nombrepelicula) && !empty($usuario) && !empty($resenia) && !empty($resenia)) {
             $this->modelResenias->editarReseniaDB($id, $nombrepelicula, $usuario, $resenia, $genero);
             header('Location: ' . BASE_URL . "admin");
         } else
@@ -125,7 +134,7 @@ class reseniasController
     //** Agrega un genero */
     public function agregarGenero()
     {
-        $this->sesionIniciada();
+        AuthHelper::estaLogueado();
         $genero = $_POST['genero'];
         if (empty($genero))
             $this->view->mensajeError("Complete todos los campos");
@@ -139,7 +148,7 @@ class reseniasController
     //** Eliminar genero por id */
     public function eliminarGenero($id)
     {
-        $this->sesionIniciada();
+        AuthHelper::estaLogueado();
         $success = $this->modelGeneros->eliminarGeneroDB($id);
         if ($success)
             header('Location: ' . BASE_URL . "admin");
@@ -150,14 +159,15 @@ class reseniasController
     //** Llama a la vista editar genero */
     public function modificarGenero($id)
     {
-        $this->sesionIniciada();
+        AuthHelper::estaLogueado();
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->vistaEditarGenero($id, $tablagenero);
     }
     //** Toma parametros por POST y llama a la funcion para editar un genero */
-    public function editarGenero($id)
+    public function editarGenero()
     {
-        $this->sesionIniciada();
+        AuthHelper::estaLogueado();
+        $id = $_POST['id_genero'];
         $genero = $_POST['genero'];
         if (!empty($genero)) {
             $this->modelGeneros->editarGeneroDB($id, $genero);
@@ -166,13 +176,6 @@ class reseniasController
             $this->view->mensajeError("Complete todos los campos");
     }
 
-    //**Si no hay sesion iniciada te lleva a la pantalla de login */
-    private function sesionIniciada()
-    {
-        session_start();
-        if (!isset($_SESSION["ID_USUARIO"])) {
-            $this->view->vistaLogin("Esta opcion requiere ser un usuario registrado");
-            die();
-        }
-    }
+   
 }
+?>

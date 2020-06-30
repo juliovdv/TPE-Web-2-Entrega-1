@@ -8,9 +8,11 @@ $router=new Router();
 
 //Creo la tabla de ruteo
 
-$router->addRoute('resenias/:ID', 'GET', 'reseniasapiController', 'obtenerComentarios');
+$router->addRoute('resenias/:ID', 'GET', 'reseniasapiController', 'obtenerComentarios');//game/:ID/comments
 $router->addRoute('resenia/:ID','GET', 'reseniasapiController','obtenerComentarios');
-$router->addRoute('resenia/:ID','DELETE', 'reseniasapiController','borrarComentarios');
+$router->addRoute('resenia/:ID','DELETE', 'reseniasapiController','borrarComentario');
+$router->addRoute('resenia','POST', 'reseniasapiController','agregarComentario');
+
 
 
 //Ruteo

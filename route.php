@@ -1,8 +1,10 @@
 <?php
-require_once ('controllers/reseniasController.php');
-require_once ('controllers/usuariosController.php');
+require_once('controllers/reseniasController.php');
+require_once('controllers/usuariosController.php');
+require_once('controllers/adminController.php');
 
-define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
+
+define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
 
 
 // Si la direccion viene vacia lo direcciona a reseñas
@@ -39,40 +41,32 @@ switch ($urlParts[0]) {
         $controller->mostrarLogin();
         break;
     case 'admin':
-        $controller = new reseniasController();
+        $controller = new adminController();
         $controller->admin();
         break;
     case 'agregarresenia':
-        $controller = new reseniasController();
+        $controller = new adminController();
         $controller->agregarResenia();
         break;
     case 'eliminarresenia':
-        $controller = new reseniasController();
+        $controller = new adminController();
         $controller->eliminarResenia($urlParts[1]);
         break;
-    case 'modificarresenia':
-        $controller = new reseniasController();
-        $controller->modificarResenia($urlParts[1]);
-        break;
     case 'editarresenia':
-        $controller = new reseniasController();
-        $controller->editarResenia($urlParts[1]);
-        break;    
+        $controller = new adminController();
+        $controller->editarResenia();
+        break;
     case 'agregargenero':
-        $controller = new reseniasController();
+        $controller = new adminController();
         $controller->agregarGenero();
         break;
     case 'eliminargenero':
-        $controller = new reseniasController();
-        $controller->eliminarGenero($urlParts[1]); 
-        break;
-    case 'modificargenero':
-        $controller = new reseniasController();
-        $controller->modificarGenero($urlParts[1]);
+        $controller = new adminController();
+        $controller->eliminarGenero($urlParts[1]);
         break;
     case 'editargenero':
-        $controller = new reseniasController();
-        $controller->editarGenero($urlParts[1]);
+        $controller = new adminController();
+        $controller->editarGenero();
         break;
     case 'verificar':
         $controller = new usuariosController();
@@ -82,13 +76,15 @@ switch ($urlParts[0]) {
         $controller = new usuariosController();
         $controller->crearUsuario();
         break;
-    
     case 'salir':
         $controller = new usuariosController();
         $controller->cerrarSesion();
+        break;
+    case 'usuarios':
+        $controller = new adminController();
+        $controller->adminUsuarios();
         break;
     default:
         echo "<h1>Error 404 - Pagina no encontrada</h1>";
         break;
 }
-?>

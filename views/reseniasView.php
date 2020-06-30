@@ -15,6 +15,7 @@ class reseniasView
         $this->smarty->assign('resenias', BASE_URL . 'resenias');
         $this->smarty->assign('reseniasgenero', BASE_URL . 'reseniasgenero');
         $this->smarty->assign('admin', BASE_URL . 'admin');
+        $this->smarty->assign('usuarios', BASE_URL . 'usuarios');
 
     }
     //**Vista de la pantalla home, muestra la lista de generos y la lista de reseñas */
@@ -64,6 +65,13 @@ class reseniasView
         $this->smarty->assign('tablaresenia', $tablaresenia);
         $this->smarty->assign('tablagenero', $tablagenero);
         $this->smarty->display('templates/admin.tpl');
+    }
+    public function vistaUsuarios($tabla){
+        $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
+        $this->smarty->assign('title', 'Administrador usuarios');
+        $this->smarty->assign('tablausuario', $tabla);
+        $this->smarty->display('templates/usuarios.tpl');
+
     }
     //** Muestra el formulario para editar reseñas */
     public function vistaEditarResenia($id, $resenia, $tablagenero)

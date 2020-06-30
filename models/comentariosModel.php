@@ -31,9 +31,9 @@ class comentariosModel
         return $detalle;
     }
 
-    public function guardarComentario($id, $comentario){
-        $sentencia = $this->db->prepare('INSERT INTO comentario (id_resenia, comentario) VALUES (?, ?)');
-        return $sentencia->execute([$id, $comentario]);
+    public function guardarComentario($id, $comentario, $usuario, $puntuacion){
+        $sentencia = $this->db->prepare('INSERT INTO comentario (id_resenia, comentario, usuario, puntuacion) VALUES (?, ?, ?, ?)');
+        return $sentencia->execute([$id, $comentario, $usuario, $puntuacion]);
     }
     public function eliminarComentarioDB($id){
         $sentencia = $this->db->prepare('DELETE FROM comentario WHERE id_comentario = ?');

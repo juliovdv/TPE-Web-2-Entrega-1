@@ -11,6 +11,15 @@
         </div>
 
         <div class="col-sm-9">
+            
+            <div class="row">
+                <div class="col-sm">
+                    {include 'templates/editarGenero.tpl'}
+                </div>
+                <div class="col-sm">
+                    {include 'templates/editarResenia.tpl'}
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm">
                     {include 'templates/adminGeneros.tpl'}

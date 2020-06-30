@@ -6,9 +6,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="js/bootstrap.js"></script>
         <title>{$title}</title>
+        
     </head>
 
     <body>
@@ -28,6 +30,9 @@
                     <li class="nav-item">
                         <a class="text-white" href="{$admin}">Admin</a>
                     </li>
+                    <li class="nav-item">
+                    <a class="text-white" href="{$usuarios}">Usuarios</a>
+                </li>
                 </ul>
                 {if isset($usuario)}
                     <div class="navbar-nav ml-auto">

@@ -22,6 +22,12 @@ class usuariosModel
         $sentencia->execute(array(($usuario)));   
         return $sentencia->fetch(PDO::FETCH_OBJ);
     }
+    public function traerUsuarios(){
+        $sentencia = $this->db->prepare("SELECT * FROM usuario");
+        $sentencia->execute(array());
+        $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $detalletabla;
+    }
     public function guardarUsuario($usuario, $clave, $admin){
         $sentencia = $this->db->prepare('INSERT INTO usuario (mail, clave, admin) VALUES (?, ?, ?)');
         return $sentencia->execute([$usuario, $clave, $admin]);
