@@ -57,9 +57,12 @@ class usuariosController
         if (!empty($_POST['usuario']) && !empty($_POST['clave'])) {
             $usuario = $_POST['usuario'];
             $clave = password_hash($_POST['clave'], PASSWORD_DEFAULT);
-            $this->model->guardarUsuario($usuario, $clave, '0');
-            $usuarioDB = $this->model->traerUsuario($usuario);
-            AuthHelper::logeaUsuario($usuarioDB);
+            $success = $this->model->guardarUsuario($usuario, $clave, '0');
+            if ($success){
+                $usuarioDB = $this->model->traerUsuario($usuario);
+                AuthHelper::logeaUsuario($usuarioDB);}
+            else 
+                $this->view->vistaLogin("Ya existe un usuario con ese mail");
         } else {
             $this->view->vistaLogin("Error complete todos los campos");
         }

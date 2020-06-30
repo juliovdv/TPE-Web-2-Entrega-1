@@ -33,7 +33,7 @@ class usuariosModel
         return $sentencia->execute([$usuario, $clave, $admin]);
     }
 
-    public function hacerAdmin($id, $admin){
+    public function hacerAdminBD($id, $admin){
         $sentencia = $this->db->prepare('UPDATE usuario SET admin = ? WHERE id_usuario = ?');
         $sentencia->execute([$admin, $id]);
     }
@@ -41,7 +41,7 @@ class usuariosModel
         $sentencia = $this->db->prepare('UPDATE usuario SET clave = ? WHERE id_usuario = ?');
         $sentencia->execute([$clave, $id]);
     }
-    public function borrarUsuario($id){
+    public function borrarUsuarioDB($id){
     $sentencia = $this->db->prepare('DELETE FROM usuario WHERE id_usuario = ?');
         return $sentencia->execute([$id]);
     }

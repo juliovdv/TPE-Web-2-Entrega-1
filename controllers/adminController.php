@@ -20,13 +20,14 @@ class adminController
         $this->modelGeneros = new generosModel();
         $this->modelResenias = new reseniasModel();
         $this->view = new reseniasView();
+        
     }
      //Funciones de adminiostrador RESEÑAS
 
     //**Llama a la funcion vista Administrador */
     public function admin()
     {
-        AuthHelper::estaLogueado();
+        AuthHelper::esAdmin();
         $tablaGeneros = $this->modelGeneros->traerGeneros();
         $tablaResenias = $this->modelResenias->traerResenias();
         $this->view->vistaAdmin($tablaResenias, $tablaGeneros);
@@ -86,6 +87,11 @@ class adminController
             $this->view->mensajeError("Complete todos los campos");
     }
 
+    //Imagenes
+    public function agregarImagen($img, $id){
+
+    }
+
     //Tabla genero
 
     //** Agrega un genero */
@@ -137,6 +143,16 @@ class adminController
         AuthHelper::estaLogueado();
         $tablausuarios=$this->modelUsuarios->traerUsuarios();
         $this->view->vistaUsuarios($tablausuarios);
-     }
+    }
+    public function hacerAdmin($id){
+        $admin='1';
+        $this->modelUsuarios->hacerAdminDB($id, $admin);
+        header('Location: ' . BASE_URL . "usuarios");
+
+    }
+    public function borrarUsuario($id){
+        $this->modelUsuarios->borrarUsuarioDB($id);
+        header('Location: ' . BASE_URL . "usuarios");
+    }
 }
 ?>

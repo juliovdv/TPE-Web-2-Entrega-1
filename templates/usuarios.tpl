@@ -8,9 +8,9 @@
                 {if $usuario->admin}
                     Es admin
                 {else}
-                    <a class="btn" href="">Hacer admin</a>
+                    <a class="btn" href="haceradmin/{$usuario->id_usuario}">Hacer admin</a>
                 {/if}   
-                <a class="btn" href="">Borrar usuario</a>
+                <a class="btn" href="borraruser/{$usuario->id_usuario}">Borrar usuario</a>
     
     
     

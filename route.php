@@ -84,6 +84,14 @@ switch ($urlParts[0]) {
         $controller = new adminController();
         $controller->adminUsuarios();
         break;
+    case 'haceradmin':
+        $controller = new adminController();
+        $controller->hacerAdmin($urlParts[1]);
+        break;
+    case 'borraruser':
+        $controller = new adminController();
+        $controller->borrarUsuario($urlParts[1]);
+        break;
     default:
         echo "<h1>Error 404 - Pagina no encontrada</h1>";
         break;

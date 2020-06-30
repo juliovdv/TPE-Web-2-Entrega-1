@@ -24,5 +24,11 @@ class AuthHelper {
         $_SESSION["ADMIN"] = $usuario->admin;
         header('Location: ' . BASE_URL . "admin");
     }
+    public static function esAdmin(){
+        self::iniciaSesion();
+        if (!isset($_SESSION["ID_USUARIO"]) || ($_SESSION["ADMIN"] == '0')) {
+            header('Location: ' . BASE_URL . "resenias");//$this->view->vistaLogin("Esta opcion requiere ser un usuario registrado");
+            die();}
+    }
 }
 ?>
