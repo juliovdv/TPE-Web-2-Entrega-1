@@ -7,43 +7,32 @@
 <p> <b>Genero: </b>{$genero} </p>
 <p> <b>Reseña: </b> {$resenia->resenia} </p>
 {if isset($resenia->img)}
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-  
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-      <div class="item active">
-        <img src="{$resenia->img}" alt="Los Angeles">
-      </div>
-  
-      <div class="item">
-        <img src="{$resenia->img}" alt="Chicago">
-      </div>
-  
-      <div class="item">
-        <img src="{$resenia->img}" alt="New York">
-      </div>
+  <div class="w3-content" style="max-width:1200px">
+  <img class="mySlides" src="{$resenia->img}" style="width:100%">
+  <img class="mySlides" src="{$resenia->img}" style="width:100%">
+  <img class="mySlides" src="{$resenia->img}" style="width:100%">
+
+  <div class="w3-row-padding w3-section">
+    <div class="w3-col s4">
+      <img class="demo w3-opacity" src="img_nature_wide.jpg"
+      style="width:100%" onclick="currentDiv(1)">
     </div>
-  
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">Next</span>
-    </a>
+    <div class="w3-col s4">
+      <img class="demo w3-opacity" src="img_snow_wide.jpg"
+      style="width:100%;display:none" onclick="currentDiv(2)">
+    </div>
+    <div class="w3-col s4">
+      <img class="demo w3-opacity" src="img_mountains_wide.jpg"
+      style="width:100%;display:none" onclick="currentDiv(3)">
+    </div>
+  </div>
+</div>
   </div>
 {/if}
+{include 'templates/vue/comentarios.tpl'}
 
 <a href="{$resenias}">Volver</a>
 
 
-
+<script type="text/javascript" src="js/main.js"></script>
 {include 'templates/footer.tpl'}

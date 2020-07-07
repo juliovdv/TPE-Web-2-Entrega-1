@@ -28,12 +28,17 @@ class usuariosModel
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
     }
+    public function traerUsuarioId($id){
+        $sentencia = $this->db->prepare("SELECT * FROM usuario WHERE id_usuario = ?");
+        $sentencia->execute(array(($id)));   
+        return $sentencia->fetch(PDO::FETCH_OBJ);
+    }
     public function guardarUsuario($usuario, $clave, $admin){
         $sentencia = $this->db->prepare('INSERT INTO usuario (mail, clave, admin) VALUES (?, ?, ?)');
         return $sentencia->execute([$usuario, $clave, $admin]);
     }
 
-    public function hacerAdminBD($id, $admin){
+    public function hacerAdminDB($id, $admin){
         $sentencia = $this->db->prepare('UPDATE usuario SET admin = ? WHERE id_usuario = ?');
         $sentencia->execute([$admin, $id]);
     }

@@ -8,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/style.css">
-        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <title>{$title}</title>
         
     </head>
@@ -34,7 +34,7 @@
                     <a class="text-white" href="{$usuarios}">Usuarios</a>
                 </li>
                 </ul>
-                {if isset($usuario)}
+                {if isset($usuario) && $usuario}
                     <div class="navbar-nav ml-auto">
                         <span class="navbar-text nav-link active">{$usuario}</span>
                         <a class="nav-item nav-link " href="salir">Salir<span class="sr-only"></span></a>

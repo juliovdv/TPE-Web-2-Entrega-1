@@ -2,6 +2,7 @@
 class AuthHelper {
     public function __construct(){}
     
+    
     public static function iniciaSesion(){
         if (session_status() != PHP_SESSION_ACTIVE ){
             session_start();
@@ -26,9 +27,20 @@ class AuthHelper {
     }
     public static function esAdmin(){
         self::iniciaSesion();
-        if (!isset($_SESSION["ID_USUARIO"]) || ($_SESSION["ADMIN"] == '0')) {
-            header('Location: ' . BASE_URL . "resenias");//$this->view->vistaLogin("Esta opcion requiere ser un usuario registrado");
-            die();}
+        $esAdmin = false;
+        if (isset($_SESSION["ID_USUARIO"]) && ($_SESSION["ADMIN"] == '1')) {
+            $esAdmin = true;
+        }
+        return $esAdmin;
+    }
+    public static function hayUsuario() {
+        self::iniciaSesion();
+        if (isset($_SESSION['USUARIO'])){
+            return $_SESSION['USUARIO'];
+        }
+        else {
+            return false;
+        }
     }
 }
 ?>

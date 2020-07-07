@@ -86,7 +86,7 @@ switch ($urlParts[0]) {
         break;
     case 'haceradmin':
         $controller = new adminController();
-        $controller->hacerAdmin($urlParts[1]);
+        $controller->hacerAdmin($urlParts[1],$urlParts[2]);
         break;
     case 'borraruser':
         $controller = new adminController();

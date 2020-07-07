@@ -1,5 +1,6 @@
 <?php
 require_once('libs/smarty/Smarty.class.php');
+include_once('helpers/auth.helper.php');
 
 
 class reseniasView
@@ -9,14 +10,16 @@ class reseniasView
 
     function __construct()
     {
+        $authHelper = new AuthHelper();
+        $usuario = $authHelper->hayUsuario();
         $this->smarty = new Smarty();
+        $this->smarty->assign('usuario', $usuario);
         $this->smarty->assign('url', BASE_URL);
         $this->smarty->assign('login', BASE_URL . 'login');
         $this->smarty->assign('resenias', BASE_URL . 'resenias');
         $this->smarty->assign('reseniasgenero', BASE_URL . 'reseniasgenero');
         $this->smarty->assign('admin', BASE_URL . 'admin');
         $this->smarty->assign('usuarios', BASE_URL . 'usuarios');
-
     }
     //**Vista de la pantalla home, muestra la lista de generos y la lista de reseñas */
     function mostrarResenias($tablaresenia, $tablagenero)
@@ -29,7 +32,6 @@ class reseniasView
     //**Muestra la lista genero */
     function mostrarGeneros($tabla)
     {
-
         $this->smarty->assign('title', 'Generos');
         $this->smarty->assign('tabla', $tabla);
         $this->smarty->display('templates/listaGeneros.tpl');
@@ -60,23 +62,20 @@ class reseniasView
     //**Muestra la vista de administrador */
     public function vistaAdmin($tablaresenia, $tablagenero)
     {
-        $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
         $this->smarty->assign('title', 'Administrador');
         $this->smarty->assign('tablaresenia', $tablaresenia);
         $this->smarty->assign('tablagenero', $tablagenero);
         $this->smarty->display('templates/admin.tpl');
     }
-    public function vistaUsuarios($tabla){
-        $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
+    public function vistaUsuarios($tabla)
+    {
         $this->smarty->assign('title', 'Administrador usuarios');
         $this->smarty->assign('tablausuario', $tabla);
         $this->smarty->display('templates/usuarios.tpl');
-
     }
     //** Muestra el formulario para editar reseñas */
     public function vistaEditarResenia($id, $resenia, $tablagenero)
     {
-        $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
         $this->smarty->assign('title', 'Editar Reseña');
         $this->smarty->assign('resenia', $resenia);
         $this->smarty->assign('id', $id);
@@ -86,7 +85,6 @@ class reseniasView
     //**Muestra el formulario de editar genero */
     public function vistaEditarGenero($id, $tablagenero)
     {
-        $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
         $this->smarty->assign('title', 'Editar Genero');
         $this->smarty->assign('id', $id);
         $this->smarty->assign('tablagenero', $tablagenero);
@@ -95,12 +93,16 @@ class reseniasView
     //**Recibe un error por parametro y lo muestra */
     public function mensajeError($mensaje)
     {
-        if (isset($_SESSION["ID_USUARIO"])) {
-            $this->smarty->assign('usuario', $_SESSION["USUARIO"]);
-        }
         $this->smarty->assign('mensaje', $mensaje);
         $this->smarty->assign('title', 'Error');
 
         $this->smarty->display('templates/error.tpl');
+    }
+    public function mensajeErrorPermisos($mensaje)
+    {
+        $this->smarty->assign('mensaje', $mensaje);
+        $this->smarty->assign('title', 'Error');
+
+        $this->smarty->display('templates/errorPermisos.tpl');
     }
 }

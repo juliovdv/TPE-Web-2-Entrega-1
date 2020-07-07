@@ -6,9 +6,9 @@
             <li class="list-group-item bg-transparent">
                 <b>{$usuario->mail}</b>
                 {if $usuario->admin}
-                    Es admin
+                    <a class="btn" href="haceradmin/{$usuario->id_usuario}/0">No admin</a>
                 {else}
-                    <a class="btn" href="haceradmin/{$usuario->id_usuario}">Hacer admin</a>
+                    <a class="btn" href="haceradmin/{$usuario->id_usuario}/1">Admin</a>
                 {/if}   
                 <a class="btn" href="borraruser/{$usuario->id_usuario}">Borrar usuario</a>
     
