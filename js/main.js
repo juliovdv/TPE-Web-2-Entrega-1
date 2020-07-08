@@ -1,46 +1,55 @@
 "use strict"
-let app = new Vue({
-    el: '#app',
+let mail = document.querySelector("#usuario").getAttribute('es-usuario');
+let esAdmin = document.querySelector("#usuario").getAttribute('es-admin');
+let listacomentarios = new Vue({
+    el: '#listacomentarios',
 
     data: {
-        comentarios: []
+        comentarios: [],
+        promedio: 0,
+        mail: null,
+        esAdmin: 0
     },
     methods: {
         borrarComentario: function (id) {
             fetch('api/comentario/' + id, {
                 "method": "DELETE",
-                "mode": 'cors',
                 "headers": { "Content-Type": "application/json" }
             })
                 .then(response => response.json())
                 .then(mostrarComentarios())
         },
-        agregarComentario: function (comentario, puntaje) {
+        agregarComentario: function () {
             let param = window.location.pathname.split("/");
             let id_resenia = param[(param.length - 1)];
+            let comentario = document.getElementById("comentario");
+            let puntuacion = document.getElementById("puntaje");
+
             let datos = {
                 "id_resenia": id_resenia,
-                "cometario": comentario,
-                "usuario": "1",
-                "puntuacion": puntaje
+                "cometario": comentario.value,
+                "usuario": mail,
+                "puntuacion": puntuacion.value
             }
 
-            fetch('api/comentario' , {
+            fetch('api/comentario', {
                 "method": "POST",
-                "mode": 'cors',
                 "headers": { "Content-Type": "application/json" },
                 "body": JSON.stringify(datos)
+
             })
                 .then(response => response.json())
                 .then(mostrarComentarios())
         }
     }
-
 });
+
 function mostrarComentarios() {
     let param = window.location.pathname.split("/");
     let id = param[(param.length - 1)];
-    fetch('api/resenias/' + id, {
+    listacomentarios.esAdmin = esAdmin;
+    listacomentarios.mail = mail;
+    fetch('api/resenias/' + id + '/comentarios', {
         "method": "GET",
         "mode": 'cors',
         "headers": { "Content-Type": "application/json" }
@@ -48,10 +57,21 @@ function mostrarComentarios() {
 
         .then(response => response.json())
         .then(json => {
-            app.comentarios = json;
+            listacomentarios.comentarios = json;
+            listacomentarios.promedio = calcularPromedio(listacomentarios.comentarios);
         })
 }
+function calcularPromedio(elementos) {
+    let suma = 0;
+    for (let elemento of elementos) {
+        suma += parseInt(elemento.puntuacion);
+    }
+    let calculo = parseInt(suma / elementos.length);
+    return calculo;
+
+}
 mostrarComentarios();
+
 
 
 

@@ -142,7 +142,7 @@ class adminController
     //Funciones de adminiostrador USUARIOS
     public function adminUsuarios()
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $tablausuarios = $this->modelUsuarios->traerUsuarios();
         $this->view->vistaUsuarios($tablausuarios);
     }
@@ -157,5 +157,12 @@ class adminController
     {
         $this->modelUsuarios->borrarUsuarioDB($id);
         header('Location: ' . BASE_URL . "usuarios");
+    }
+    public function mensajeNoAdmin()
+    {
+        if (!AuthHelper::esAdmin()) {
+            $this->view->mensajeErrorPermisos("Esta opcion requiere permisos de administrador");
+            die;
+        }
     }
 }

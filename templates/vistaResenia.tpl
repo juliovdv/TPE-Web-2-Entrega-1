@@ -6,6 +6,10 @@
 <p> <b>Usuario: </b>{$resenia->usuario} </p>
 <p> <b>Genero: </b>{$genero} </p>
 <p> <b>Reseña: </b> {$resenia->resenia} </p>
+
+
+
+
 {if isset($resenia->img)}
   <div class="w3-content" style="max-width:1200px">
   <img class="mySlides" src="{$resenia->img}" style="width:100%">
@@ -29,7 +33,9 @@
 </div>
   </div>
 {/if}
+
 {include 'templates/vue/comentarios.tpl'}
+
 
 <a href="{$resenias}">Volver</a>
 

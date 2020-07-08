@@ -12,8 +12,10 @@ class reseniasView
     {
         $authHelper = new AuthHelper();
         $usuario = $authHelper->hayUsuario();
+        $esAdmin = $authHelper->esAdmin();
         $this->smarty = new Smarty();
         $this->smarty->assign('usuario', $usuario);
+        $this->smarty->assign('esadmin', $esAdmin);
         $this->smarty->assign('url', BASE_URL);
         $this->smarty->assign('login', BASE_URL . 'login');
         $this->smarty->assign('resenias', BASE_URL . 'resenias');
