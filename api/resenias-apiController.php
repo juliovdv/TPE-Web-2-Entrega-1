@@ -7,14 +7,12 @@ require_once 'api/apiView.php';
 class reseniasapiController{
     
     private $modelComentarios;
-    private $modelResenias;
     private $view;
-    private $dato;
+    private $data;
 
     public function __construct()
     {
         $this->modelComentarios = new comentariosModel();
-        $this->modelResenias = new reseniasModel();
         $this->view = new APIView();
         $this->data = file_get_contents("php://input");
 
@@ -29,11 +27,11 @@ class reseniasapiController{
         $id = $params[':ID'];
         $comentario = $this->modelComentarios->traerComentarioporID($id);
         if (empty($comentario)) {
-            $this->view->response("no existe el comentario con id {$id}", 404);
+            $this->view->respuesta("no existe el comentario con id {$id}", 404);
             die;
         }
         $this->modelComentarios->eliminarComentarioDB($id);
-        $this->view->response("El comentario con id:  {$id} se elimino correctamente", 200);
+        $this->view->respuesta("El comentario con id:  {$id} se elimino correctamente", 200);
     }
     public function agregarComentario() {
         $body = $this->getData();
@@ -42,7 +40,8 @@ class reseniasapiController{
         $comentario = $body->comentario;
         $usuario = $body->usuario;
         $puntuacion = $body->puntuacion;
-        $this->modelComentarios->guardarComentario($id_resenia, $comentario, $usuario, $puntuacion); 
+        $respuesta=$this->modelComentarios->guardarComentario($id_resenia, $comentario, $usuario, $puntuacion);
+        $this->view->respuesta($respuesta, 200); 
        
     }
     public function getData(){

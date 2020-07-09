@@ -14,24 +14,27 @@ let listacomentarios = new Vue({
         borrarComentario: function (id) {
             fetch('api/comentario/' + id, {
                 "method": "DELETE",
+                "mode": 'cors',
                 "headers": { "Content-Type": "application/json" }
             })
                 .then(response => response.json())
-                .then(
-                    mostrarComentarios()
-                )
+                .then(json => {
+                    console.log(json);
+                    mostrarComentarios();
+                })
         },
         crearComentario: function () {
             let param = window.location.pathname.split("/");
             let id_resenia = param[(param.length - 1)];
-            let comentario = document.getElementById("comentario");
-            let puntuacion = document.getElementById("puntaje");
-            if (comentario != "") {
+            let comentario = document.getElementById("comentario").value;
+            let puntuacion = document.getElementById("puntaje").value;
+            if (comentario !== "") {
+                
                 let datos = {
                     "id_resenia": id_resenia,
-                    "comentario": comentario.value,
+                    "comentario": comentario,
                     "usuario": mail,
-                    "puntuacion": puntuacion.value
+                    "puntuacion": puntuacion
                 }
                 agregarComentario(datos);
             }
@@ -76,8 +79,8 @@ function agregarComentario(datos) {
 
     })
         .then(response => response.json())
-        .then(
-            mostrarComentarios()
+        .then(json =>{
+            mostrarComentarios()}
         );
 }
 

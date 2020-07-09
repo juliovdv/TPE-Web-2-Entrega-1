@@ -1,8 +1,9 @@
 <?php
     class APIView{
-        public function respuesta($tabla, $status){
+        public function respuesta($data, $status){
             header("Content-Type: application/json");
-            echo json_encode($tabla);
+            header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
+            echo json_encode($data);
         }
         private function _requestStatus($code){
             $status = array(
