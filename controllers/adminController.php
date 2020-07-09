@@ -26,19 +26,17 @@ class adminController
     //**Llama a la funcion vista Administrador */
     public function admin()
     {
-        if (AuthHelper::esAdmin()) {
-            $tablaGeneros = $this->modelGeneros->traerGeneros();
-            $tablaResenias = $this->modelResenias->traerResenias();
-            $this->view->vistaAdmin($tablaResenias, $tablaGeneros);
-        } else
-            $this->view->mensajeErrorPermisos("Esta opcion requiere permisos de administrador");
+        $this->mensajeNoAdmin();
+        $tablaGeneros = $this->modelGeneros->traerGeneros();
+        $tablaResenias = $this->modelResenias->traerResenias();
+        $this->view->vistaAdmin($tablaResenias, $tablaGeneros);
     }
     //Tabla Resenias
 
     //**Toma los valores por POST y llama a la funcion para agregar una reseña a la base de datos */
     public function agregarResenia()
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $nombrepelicula = $_POST['nombre_pelicula'];
         $usuario =  $_SESSION["USUARIO"];
         $resenia = $_POST['resenia'];
@@ -60,14 +58,14 @@ class adminController
     //**Toma el id de una reseña y llama a la funcion para eliminarla de la base de datos */
     public function eliminarResenia($id)
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $this->modelResenias->eliminarReseniaDB($id);
         header('Location: ' . BASE_URL . "admin");
     }
     //**Llama a la vista Editar reseña */
     public function modificarResenia($id)
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $resenia = $this->modelResenias->traerResenia($id);
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->vistaEditarResenia($id, $resenia, $tablagenero);
@@ -75,7 +73,7 @@ class adminController
     //**Toma los datos por POST y llama a la funcion para modificarlos en la base de datos segun el ID  */
     public function editarResenia()
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $nombrepelicula = $_POST['nombre_pelicula'];
         $usuario =  $_SESSION["USUARIO"];
         $resenia = $_POST['resenia'];
@@ -89,8 +87,11 @@ class adminController
     }
 
     //Imagenes
-    public function agregarImagen($img, $id)
+    public function borrarImagen($id)
     {
+        $this->mensajeNoAdmin();
+        $this->modelResenias->borrarImagenDB($id);
+        header('Location: ' . BASE_URL . "detalle/" . $id);
     }
 
     //Tabla genero
@@ -98,7 +99,7 @@ class adminController
     //** Agrega un genero */
     public function agregarGenero()
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $genero = $_POST['genero'];
         if (empty($genero))
             $this->view->mensajeError("Complete todos los campos");
@@ -112,7 +113,7 @@ class adminController
     //** Eliminar genero por id */
     public function eliminarGenero($id)
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $success = $this->modelGeneros->eliminarGeneroDB($id);
         if ($success)
             header('Location: ' . BASE_URL . "admin");
@@ -123,14 +124,14 @@ class adminController
     //** Llama a la vista editar genero */
     public function modificarGenero($id)
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $tablagenero = $this->modelGeneros->traerGeneros();
         $this->view->vistaEditarGenero($id, $tablagenero);
     }
     //** Toma parametros por POST y llama a la funcion para editar un genero */
     public function editarGenero()
     {
-        AuthHelper::estaLogueado();
+        $this->mensajeNoAdmin();
         $id = $_POST['id_genero'];
         $genero = $_POST['genero'];
         if (!empty($genero)) {
@@ -148,6 +149,7 @@ class adminController
     }
     public function hacerAdmin($id, $admin)
     {
+        $this->mensajeNoAdmin();
         if ($admin == '0' || $admin == '1') {
             $this->modelUsuarios->hacerAdminDB($id, $admin);
             header('Location: ' . BASE_URL . "usuarios");
@@ -155,6 +157,7 @@ class adminController
     }
     public function borrarUsuario($id)
     {
+        $this->mensajeNoAdmin();
         $this->modelUsuarios->borrarUsuarioDB($id);
         header('Location: ' . BASE_URL . "usuarios");
     }

@@ -4,7 +4,7 @@
         {foreach from=$tablagenero item=genero}
             <li class="list-group-item">
                 <b>{$genero->nombre}</b>
-                <a class="btn" href="eliminargenero/{$genero->id_genero}"> Borrar </a>
+                <a class="btn btn-danger" href="eliminargenero/{$genero->id_genero}"> X </a>
             </li>
         {/foreach}
     </ul>

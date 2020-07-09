@@ -22,7 +22,7 @@
     </div>
     <div class="form-group">
         <label>Imagenes</label>
-        <input type="file" name="imagesToUpload[]" id="imageToUpload">
+        <input  type="file" name="input_name" id="imageToUpload">
     </div>
 
 

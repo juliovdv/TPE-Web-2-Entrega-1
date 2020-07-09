@@ -62,6 +62,10 @@ class reseniasModel
         $sentencia = $this->db->prepare('UPDATE resenia SET nombre_pelicula = ?, usuario = ?, resenia = ?, id_genero = ? WHERE id_resenia = ?');
         $sentencia->execute([$nombrepelicula, $usuario, $resenia, $genero, $id]);
     }
+    public function borrarImagenDB($id){
+        $sentencia = $this->db->prepare('UPDATE resenia SET img = ? WHERE id_resenia = ?');
+        $sentencia->execute([null, $id]);
+    }
 
     //**Trae las tuplas de la tabla resenia que se correspondan con el id_genero */
     public function filtrarReseniasxGeneros($id_genero){

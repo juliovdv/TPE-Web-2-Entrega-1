@@ -25,7 +25,7 @@
                 <ul>
                     <li v-for="comentario in comentarios">
                         <p>Usuario: {{comentario.usuario}}  Puntaje: {{comentario.puntuacion}}
-                        <button class="btn-danger" v-if="esAdmin" v-on:click="borrarComentario(comentario.id_comentario)">X</button> </p>
+                        <button class="btn btn-danger" v-if="esAdmin" v-on:click="borrarComentario(comentario.id_comentario)">X</button> </p>
                         <p>Comentario: {{comentario.comentario}}</p>
                     </li>
                 </ul>
