@@ -4,7 +4,7 @@
         {foreach from=$tablaresenia item=resenia}
             <li class="list-group-item">
             <b>{$resenia->nombre_pelicula}</b>
-            <a class="btn" href="modificarresenia/{$resenia->id_resenia}">Modificar</a>
+            <a class="btn" href="detalle/{$resenia->id_resenia}">Imagenes/Comentarios</a>
             <a class="btn" href="eliminarresenia/{$resenia->id_resenia}"> Borrar </a>
 
             </li>

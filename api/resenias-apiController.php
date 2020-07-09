@@ -23,17 +23,23 @@ class reseniasapiController{
     public function obtenerComentarios($params = []){
         $id = $params[':ID'];
         $tablacomentarios = $this->modelComentarios->traerComentariosporResenia($id);
-        $this->view->respuesta($tablacomentarios);
+        $this->view->respuesta($tablacomentarios, 200);
     }
     public function borrarComentario($params = []){
         $id = $params[':ID'];
+        $comentario = $this->modelComentarios->traerComentarioporID($id);
+        if (empty($comentario)) {
+            $this->view->response("no existe el comentario con id {$id}", 404);
+            die;
+        }
         $this->modelComentarios->eliminarComentarioDB($id);
+        $this->view->response("El comentario con id:  {$id} se elimino correctamente", 200);
     }
     public function agregarComentario() {
         $body = $this->getData();
 
         $id_resenia = $body->id_resenia;
-        $comentario = $body->cometario;
+        $comentario = $body->comentario;
         $usuario = $body->usuario;
         $puntuacion = $body->puntuacion;
         $this->modelComentarios->guardarComentario($id_resenia, $comentario, $usuario, $puntuacion); 

@@ -21,8 +21,8 @@
         <textarea name="resenia" type="text" class="form-control" rows="3"></textarea>
     </div>
     <div class="form-group">
-        <label>Caratula</label>
-        <input type="file" name="input_name" id="imageToUpload">
+        <label>Imagenes</label>
+        <input type="file" name="imagesToUpload[]" id="imageToUpload">
     </div>
 
 

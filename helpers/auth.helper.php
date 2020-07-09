@@ -23,7 +23,10 @@ class AuthHelper {
         $_SESSION["ID_USUARIO"] = $usuario->id_usuario;
         $_SESSION["USUARIO"] = $usuario->mail;
         $_SESSION["ADMIN"] = $usuario->admin;
-        header('Location: ' . BASE_URL . "admin");
+        if ($usuario->admin)
+            header('Location: ' . BASE_URL . "admin");
+        else
+            header('Location: ' . BASE_URL . "resenias");
     }
     public static function esAdmin(){
         self::iniciaSesion();

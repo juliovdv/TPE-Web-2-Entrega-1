@@ -17,29 +17,24 @@ let listacomentarios = new Vue({
                 "headers": { "Content-Type": "application/json" }
             })
                 .then(response => response.json())
-                .then(mostrarComentarios())
+                .then(
+                    mostrarComentarios()
+                )
         },
-        agregarComentario: function () {
+        crearComentario: function () {
             let param = window.location.pathname.split("/");
             let id_resenia = param[(param.length - 1)];
             let comentario = document.getElementById("comentario");
             let puntuacion = document.getElementById("puntaje");
-
-            let datos = {
-                "id_resenia": id_resenia,
-                "cometario": comentario.value,
-                "usuario": mail,
-                "puntuacion": puntuacion.value
+            if (comentario != "") {
+                let datos = {
+                    "id_resenia": id_resenia,
+                    "comentario": comentario.value,
+                    "usuario": mail,
+                    "puntuacion": puntuacion.value
+                }
+                agregarComentario(datos);
             }
-
-            fetch('api/comentario', {
-                "method": "POST",
-                "headers": { "Content-Type": "application/json" },
-                "body": JSON.stringify(datos)
-
-            })
-                .then(response => response.json())
-                .then(mostrarComentarios())
         }
     }
 });
@@ -63,13 +58,29 @@ function mostrarComentarios() {
 }
 function calcularPromedio(elementos) {
     let suma = 0;
-    for (let elemento of elementos) {
-        suma += parseInt(elemento.puntuacion);
+    let calculo = 0;
+    if (elementos.length != "0") {
+        for (let elemento of elementos) {
+            suma += parseInt(elemento.puntuacion);
+        }
+        calculo = parseInt(suma / elementos.length);
     }
-    let calculo = parseInt(suma / elementos.length);
     return calculo;
-
 }
+
+function agregarComentario(datos) {
+    fetch('api/comentario', {
+        "method": "POST",
+        "headers": { "Content-Type": "application/json"},
+        "body": JSON.stringify(datos)
+
+    })
+        .then(response => response.json())
+        .then(
+            mostrarComentarios()
+        );
+}
+
 mostrarComentarios();
 
 

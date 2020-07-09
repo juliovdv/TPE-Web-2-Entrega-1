@@ -20,12 +20,13 @@
                         <option value="5">5</option>
     
                     </select>
-                    <button v-on:click="agregarComentario()" type="button" class="btn btn-formulario">Enviar</button>
+                    <button v-on:click="crearComentario()" type="button" class="btn btn-formulario">Enviar</button>
                 </form>
                 <ul>
                     <li v-for="comentario in comentarios">
-                        Usuario: {{comentario.usuario}} Comentario: {{comentario.comentario}} Puntaje: {{comentario.puntuacion}}
-                        <button v-if="esAdmin" v-on:click="borrarComentario(comentario.id_comentario)">Borrar</button>
+                        <p>Usuario: {{comentario.usuario}}  Puntaje: {{comentario.puntuacion}}
+                        <button class="btn-danger" v-if="esAdmin" v-on:click="borrarComentario(comentario.id_comentario)">X</button> </p>
+                        <p>Comentario: {{comentario.comentario}}</p>
                     </li>
                 </ul>
             </div>

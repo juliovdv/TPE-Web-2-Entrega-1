@@ -9,7 +9,7 @@ header {
     background-color: steelblue;
 }
 .cuerpo {
-    height: 650px;
+    height: auto;
     background-color: lightgray;
 }
 
@@ -20,7 +20,7 @@ footer{
 }
 .sidenav{
     background-color: steelblue;
-    height: 640px;
+    height: 750px;
 }
 
 .btn-formulario{
