@@ -26,7 +26,7 @@ class reseniasapiController{
         $id = $params[':ID'];
         $ordenpor = $params[':ORDENPOR'];
         $orden = $params[':ORDEN'];
-        if (($ordenpor="id_comentario") || ($ordenpor="usuario") || ($ordenpor="puntuacion") && ($orden="ASC") || ($orden="DESC")){
+        if (($ordenpor=="id_comentario") || ($ordenpor=="usuario") || ($ordenpor=="puntuacion") && ($orden=="ASC") || ($orden=="DESC")){
             $tablacomentarios = $this->modelComentarios->traerComentariosporResenia($id, $ordenpor, $orden);
             $this->view->respuesta($tablacomentarios, 200);}
         else
