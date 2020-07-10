@@ -18,11 +18,23 @@ class reseniasapiController{
 
 
     }
+
+    /**
+     * Toma id, ordenpor y orden, recibe del modelo y manda a la vista la lista de comentarios ordenados
+     */
     public function obtenerComentarios($params = []){
         $id = $params[':ID'];
-        $tablacomentarios = $this->modelComentarios->traerComentariosporResenia($id);
-        $this->view->respuesta($tablacomentarios, 200);
+        $ordenpor = $params[':ORDENPOR'];
+        $orden = $params[':ORDEN'];
+        if (($ordenpor="id_comentario") || ($ordenpor="usuario") || ($ordenpor="puntuacion") && ($orden="ASC") || ($orden="DESC")){
+            $tablacomentarios = $this->modelComentarios->traerComentariosporResenia($id, $ordenpor, $orden);
+            $this->view->respuesta($tablacomentarios, 200);}
+        else
+            $this->view->respuesta("el valor de ordenado no se corresponde con uno disponible", 404);
     }
+    /**
+     * Toma id y lo pasa al modelo para que sea borrado
+    */
     public function borrarComentario($params = []){
         $id = $params[':ID'];
         $comentario = $this->modelComentarios->traerComentarioporID($id);
@@ -33,6 +45,9 @@ class reseniasapiController{
         $this->modelComentarios->eliminarComentarioDB($id);
         $this->view->respuesta("El comentario con id:  {$id} se elimino correctamente", 200);
     }
+    /**
+     * Toma body con valores y los pasa al modelo para que sean guardados
+     */
     public function agregarComentario() {
         $body = $this->getData();
 

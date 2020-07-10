@@ -49,7 +49,7 @@ class reseniasView
     //**Muestra e detalle de una reseña  */
     function mostrarDetalle($resenia, $genero)
     {
-        $this->smarty->assign('title', 'Generos');
+        $this->smarty->assign('title', 'Detalle');
         $this->smarty->assign('resenia', $resenia);
         $this->smarty->assign('genero', $genero->nombre);
         $this->smarty->display('templates/vistaResenia.tpl');

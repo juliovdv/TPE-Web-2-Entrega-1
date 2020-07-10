@@ -8,7 +8,7 @@ $router=new Router();
 
 //Creo la tabla de ruteo
 
-$router->addRoute('resenias/:ID/comentarios', 'GET', 'reseniasapiController', 'obtenerComentarios');
+$router->addRoute('resenias/:ID/comentarios/orden/:ORDENPOR/:ORDEN', 'GET', 'reseniasapiController', 'obtenerComentarios');
 $router->addRoute('comentario/:ID','GET', 'reseniasapiController','obtenerComentarios');
 $router->addRoute('comentario/:ID','DELETE', 'reseniasapiController','borrarComentario');
 $router->addRoute('comentario','POST', 'reseniasapiController','agregarComentario');

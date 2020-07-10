@@ -20,7 +20,7 @@ let listacomentarios = new Vue({
                 .then(response => response.json())
                 .then(json => {
                     console.log(json);
-                    mostrarComentarios();
+                    mostrarComentarios("id_comentario","ASC");
                 })
         },
         crearComentario: function () {
@@ -29,7 +29,7 @@ let listacomentarios = new Vue({
             let comentario = document.getElementById("comentario").value;
             let puntuacion = document.getElementById("puntaje").value;
             if (comentario !== "") {
-                
+
                 let datos = {
                     "id_resenia": id_resenia,
                     "comentario": comentario,
@@ -38,16 +38,21 @@ let listacomentarios = new Vue({
                 }
                 agregarComentario(datos);
             }
+        },
+        ordenarPor: function () {
+            let ordenpor = document.getElementById("ordenpor").value;
+            let orden = document.getElementById("orden").value;
+            mostrarComentarios(ordenpor, orden);
         }
     }
 });
 
-function mostrarComentarios() {
+function mostrarComentarios(ordenpor, orden) {
     let param = window.location.pathname.split("/");
     let id = param[(param.length - 1)];
     listacomentarios.esAdmin = esAdmin;
     listacomentarios.mail = mail;
-    fetch('api/resenias/' + id + '/comentarios', {
+    fetch('api/resenias/' + id + '/comentarios/' + 'orden/' + ordenpor +'/'+ orden, {
         "method": "GET",
         "mode": 'cors',
         "headers": { "Content-Type": "application/json" }
@@ -74,17 +79,18 @@ function calcularPromedio(elementos) {
 function agregarComentario(datos) {
     fetch('api/comentario', {
         "method": "POST",
-        "headers": { "Content-Type": "application/json"},
+        "headers": { "Content-Type": "application/json" },
         "body": JSON.stringify(datos)
 
     })
         .then(response => response.json())
-        .then(json =>{
-            mostrarComentarios()}
+        .then(json => {
+            mostrarComentarios("id_comentario","ASC")
+        }
         );
 }
 
-mostrarComentarios();
+mostrarComentarios("id_comentario","ASC");
 
 
 

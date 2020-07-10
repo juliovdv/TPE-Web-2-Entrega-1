@@ -28,16 +28,25 @@ class usuariosModel
         $detalletabla = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $detalletabla;
     }
+    /**
+     * Recibe id y devuelve la tupla que corresponda al usuario
+     */
     public function traerUsuarioId($id){
         $sentencia = $this->db->prepare("SELECT * FROM usuario WHERE id_usuario = ?");
         $sentencia->execute(array(($id)));   
         return $sentencia->fetch(PDO::FETCH_OBJ);
     }
+
+    /**
+     * Recibe usuario, clave y admin y crea una nueva tupla con los valores correspondientes
+     */
     public function guardarUsuario($usuario, $clave, $admin){
         $sentencia = $this->db->prepare('INSERT INTO usuario (mail, clave, admin) VALUES (?, ?, ?)');
         return $sentencia->execute([$usuario, $clave, $admin]);
     }
-
+    /**
+     * Recibe id y admin, y cambia el valor en la tabla
+     */
     public function hacerAdminDB($id, $admin){
         $sentencia = $this->db->prepare('UPDATE usuario SET admin = ? WHERE id_usuario = ?');
         $sentencia->execute([$admin, $id]);
@@ -46,6 +55,9 @@ class usuariosModel
         $sentencia = $this->db->prepare('UPDATE usuario SET clave = ? WHERE id_usuario = ?');
         $sentencia->execute([$clave, $id]);
     }
+    /**
+    *Recibe id, y borra al usuario con el id correspondiente 
+    */
     public function borrarUsuarioDB($id){
     $sentencia = $this->db->prepare('DELETE FROM usuario WHERE id_usuario = ?');
         return $sentencia->execute([$id]);

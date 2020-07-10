@@ -141,12 +141,18 @@ class adminController
             $this->view->mensajeError("Complete todos los campos");
     }
     //Funciones de adminiostrador USUARIOS
+    /**
+     * Pide al modelo la tabla usuarios y la pasa a la vista
+     */
     public function adminUsuarios()
     {
         $this->mensajeNoAdmin();
         $tablausuarios = $this->modelUsuarios->traerUsuarios();
         $this->view->vistaUsuarios($tablausuarios);
     }
+    /**
+     * Recibe id y admin, y pasa al modelo para que se modifique el valor admin de ese id
+     */
     public function hacerAdmin($id, $admin)
     {
         $this->mensajeNoAdmin();
@@ -155,12 +161,18 @@ class adminController
             header('Location: ' . BASE_URL . "usuarios");
         }
     }
+    /**
+     * REcibe id y pasa al modelo ese id para que ese usuario sea borrado
+     */
     public function borrarUsuario($id)
     {
         $this->mensajeNoAdmin();
         $this->modelUsuarios->borrarUsuarioDB($id);
         header('Location: ' . BASE_URL . "usuarios");
     }
+    /**
+     * Bloquea el acceso a las pesonas que no sean admin
+     */
     public function mensajeNoAdmin()
     {
         if (!AuthHelper::esAdmin()) {

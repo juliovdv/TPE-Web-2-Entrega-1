@@ -51,7 +51,7 @@ class usuariosController
         session_destroy();
         header("Location: " . BASE_URL . 'resenias');
     }
-
+    
     public function crearUsuario()
     {
         if (!empty($_POST['usuario']) && !empty($_POST['clave'])) {
